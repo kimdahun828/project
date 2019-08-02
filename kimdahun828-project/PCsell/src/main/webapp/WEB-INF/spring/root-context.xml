@@ -1,8 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:jee="http://www.springframework.org/schema/jee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+						http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
 	
-	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:env.properties"/>
+	</bean>
+
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" >
+		<property name="location" value="classpath:env.properties" />
+	</bean>
+
 		
+		<bean id="dataSource"
+		  class="org.apache.commons.dbcp2.BasicDataSource">
+		  <property name="driverClassName" value="${ds.driver}" />
+		  <property name="url" value="${ds.url}" />
+		  <property name="username" value="${ds.username}" />
+		  <property name="password" value="${ds.password}" />
+		  <property name="maxIdle" value="10" />
+		  <property name="maxTotal" value="20" />
+		  <property name="maxWaitMillis" value="-1" />
+		 </bean> 
+		
+	<!-- SqlSessionFactoryBean.getObject() -> SqlSessionfactory를 반환 -->
+	<bean id="sqlSessionFactory"
+		  class="org.mybatis.spring.SqlSessionFactoryBean">
+		 <property name="dataSource" ref="dataSource" />
+		 <property name="configLocation" value="classpath:mybatis-config.xml" />
+	</bean>
+	
+	<!--  Spring SqlSessionTemplate (SqlSession을 내장) 객체 등록 -->
+	<bean id="sqlSessionTemplate"
+		  class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory" />	  
+	</bean>
+
+	<context:component-scan base-package="com.pcsell" use-default-filters="true">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	
+		<bean id="cartDao"
+		class="com.pcsell.dao.CartDaoImpl">
+		<property name="cartMapper" ref="cartMapper" />
+	</bean>
+	
+	<bean id="cartService"
+		class="com.pcsell.service.CartServiceImpl">
+		<property name="cartDao" ref="cartDao" />
+	</bean>
+	
+	<bean id="cartMapper"
+		class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.pcsell.mapper.CartMapper" />
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
+	</bean>
+	
+	<import resource="SJK-context.xml"/>
 </beans>
