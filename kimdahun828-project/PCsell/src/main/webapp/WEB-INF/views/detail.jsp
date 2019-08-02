@@ -67,11 +67,7 @@
 						<!-- LOGO -->
 						<div class="col-md-3">
 							<div class="header-logo">
-<<<<<<< HEAD
-								<a href="/PCsell" class="logo">
-=======
 								<a href="${ path }/" class="logo">
->>>>>>> branch 'master' of https://github.com/kimdahun828/project.git
 									<img src="/PCsell/resources/img/logo.png" alt="">
 								</a>
 							</div>

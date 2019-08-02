@@ -90,7 +90,7 @@
 						<div style="clear: both">
 							<button id="loginButton" class="btn btn-transparent">로그인</button>
 							
-							<a href="/member/register" class="btn btn-transparent">회원가입</a>
+							<a href="register" class="btn btn-transparent">회원가입</a>
 							
 						</div>
 						

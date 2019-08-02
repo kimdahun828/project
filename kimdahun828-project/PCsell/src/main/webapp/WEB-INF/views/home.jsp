@@ -176,15 +176,9 @@
 					<ul class="main-nav nav navbar-nav">
 						<li class="active"><a href="#">Home</a></li>
 						<li><a href="#">Hot Deals</a></li>
-<<<<<<< HEAD
-						<li><a href="#">Categories</a></li>
-						<li><a href="laptop">Laptops</a></li>
-						<li><a href="accessories">Accessories</a></li>
-=======
 						<li><a href="${ path }/productList">Categories</a></li>
 						<li><a href="#">Laptops</a></li>
 						<li><a href="#">Accessories</a></li>
->>>>>>> branch 'master' of https://github.com/kimdahun828/project.git
 					</ul>
 					<!-- /NAV -->
 				</div>

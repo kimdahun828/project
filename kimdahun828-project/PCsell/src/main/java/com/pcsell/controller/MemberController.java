@@ -1,24 +1,23 @@
 package com.pcsell.controller;
 
-import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.pcsell.service.MemberService;
+import com.pcsell.service.MemberServiceImpl;
 import com.pcsell.vo.Member;
 
 @Controller
 @RequestMapping(value="/member")
 public class MemberController {
 	
-	//@Inject
-	MemberService memberService;
+	
+	
+	//@Autowired
+	MemberServiceImpl memberService;
 	
 	// 로그인 화면
 	@RequestMapping(
@@ -28,24 +27,50 @@ public class MemberController {
 		return "member/login";
 	}
 	
-	// 회원 가입
 	@RequestMapping(
-			value="/register",
-			method=RequestMethod.POST,
-			produces="text/plain;charset=utf-8")
-	@ResponseBody
-	public String register(
-			Member member, 
-			@RequestParam("confirmPasswd") String confirmPasswd) {
-		
-		// 비밀번호와 비밀번호 확인이 다르면 오류 문자열을 던짐
-		if (!member.getPasswd().equals(confirmPasswd)) {
-			return MemberService.WRONG_PASSWD;
-		}
-		
-		// 회원 가입 처리후, 결과에 따라 다른 문자열 반환
-		return memberService.registerMember(member);
+			path="/loginView", 
+			method=RequestMethod.GET)
+	public String loginView() {
+		return "member/login";
 	}
+	
+	@RequestMapping(value="/register", method=RequestMethod.GET)
+	public String registerView() {
+		return "member/register";
+	}
+	
+	// 로그인 처리
+	@RequestMapping(path = "login", method = RequestMethod.POST)
+	public String login(String id, String passwd, HttpSession session) {
+		
+		Member member = memberService.findMemberByIdPasswd(id, passwd);
+		
+		if (member != null) {
+			session.setAttribute("loginuwer", member);
+			return "redirect:/home";
+		}else {
+			return "account/login";
+		}
+	}
+	
+	// 로그아웃 처리
+	public String logout(HttpSession session) {
+		
+		session.removeAttribute("loginuser");
+		return "redirect:/home";
+	}
+	
+	// 회원 가입
+		@RequestMapping(
+				value="/register",
+				method=RequestMethod.POST)
+		public String register(Member member) {
+			
+			// 회원 가입 처리후, 결과에 따라 다른 문자열 반환
+			//memberService.registerMember(member);
+			
+			return "redirect:/";
+		}
 	
 	
 	

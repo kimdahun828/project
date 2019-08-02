@@ -50,7 +50,7 @@
 				<!-- 로그인 -->
 				<div class="widget personal-info">
 					<h3 class="widget-header user">회원 가입</h3>
-					<form id="registerForm" action="#">
+					<form id="registerForm" action="register" method="post">
 					
 						<!-- 아이디 -->
 						<div class="form-group">
@@ -82,7 +82,7 @@
 							<input type="hp" class="form-control" name="hp" id="hp">
 						</div>
 						
-						<button id="registerButton" class="btn btn-transparent">회원 가입</button>
+						<button id="registerButton" type="submit" class="btn btn-transparent">회원 가입</button>
 						
 					</form>
 				</div>
@@ -98,8 +98,8 @@
 <script type="text/javascript">
 
 $("#registerButton").on("click", function(e){
-	e.preventDefault();
-	doRegister();
+	//e.preventDefault();
+	//doRegister();
 });
 
 function doRegister() {
