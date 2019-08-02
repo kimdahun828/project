@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="path" value="${ pageContext.request.contextPath }"/>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -66,7 +67,7 @@
 						<!-- LOGO -->
 						<div class="col-md-3">
 							<div class="header-logo">
-								<a href="#" class="logo">
+								<a href="${ path }" class="logo">
 									<img src="/PCsell/resources/img/logo.png" alt="">
 								</a>
 							</div>
@@ -175,7 +176,7 @@
 					<ul class="main-nav nav navbar-nav">
 						<li class="active"><a href="#">Home</a></li>
 						<li><a href="#">Hot Deals</a></li>
-						<li><a href="#">Categories</a></li>
+						<li><a href="${ path }/productList">Categories</a></li>
 						<li><a href="#">Laptops</a></li>
 						<li><a href="#">Smartphones</a></li>
 						<li><a href="#">Cameras</a></li>
@@ -197,10 +198,10 @@
 				<div class="row">
 					<div class="col-md-12">
 						<ul class="breadcrumb-tree">
-							<li><a href="#">Home</a></li>
-							<li><a href="#">All Categories</a></li>
-							<li><a href="#">Accessories</a></li>
-							<li class="active">Headphones (227,490 Results)</li>
+							<li><a href="${ path }/">Home</a></li>
+							<li><a href="${ path }/produtList">All Categories</a></li>
+							<li><a href="#"></a></li>
+							<li class="active"></li>
 						</ul>
 					</div>
 				</div>
@@ -227,8 +228,8 @@
 									<input type="checkbox" id="category-1">
 									<label for="category-1">
 										<span></span>
-										Laptops
-										<small>(120)</small>
+										CPU
+										<small></small>
 									</label>
 								</div>
 
@@ -236,8 +237,8 @@
 									<input type="checkbox" id="category-2">
 									<label for="category-2">
 										<span></span>
-										Smartphones
-										<small>(740)</small>
+										Mainboard
+										<small></small>
 									</label>
 								</div>
 
@@ -245,8 +246,8 @@
 									<input type="checkbox" id="category-3">
 									<label for="category-3">
 										<span></span>
-										Cameras
-										<small>(1450)</small>
+										RAM
+										<small></small>
 									</label>
 								</div>
 
@@ -254,8 +255,8 @@
 									<input type="checkbox" id="category-4">
 									<label for="category-4">
 										<span></span>
-										Accessories
-										<small>(578)</small>
+										VGA
+										<small></small>
 									</label>
 								</div>
 
@@ -263,8 +264,8 @@
 									<input type="checkbox" id="category-5">
 									<label for="category-5">
 										<span></span>
-										Laptops
-										<small>(120)</small>
+										SSD
+										<small></small>
 									</label>
 								</div>
 
@@ -272,8 +273,26 @@
 									<input type="checkbox" id="category-6">
 									<label for="category-6">
 										<span></span>
-										Smartphones
-										<small>(740)</small>
+										HDD
+										<small></small>
+									</label>
+								</div>
+								
+								<div class="input-checkbox">
+									<input type="checkbox" id="category-7">
+									<label for="category-7">
+										<span></span>
+										Power
+										<small></small>
+									</label>
+								</div>
+								
+								<div class="input-checkbox">
+									<input type="checkbox" id="category-7">
+									<label for="category-7">
+										<span></span>
+										Case
+										<small></small>
 									</label>
 								</div>
 							</div>
@@ -418,8 +437,8 @@
 								</label>
 							</div>
 							<ul class="store-grid">
-								<li class="active"><i class="fa fa-th"></i></li>
-								<li><a href="#"><i class="fa fa-th-list"></i></a></li>
+								<li><a href="${ path }/productWrite">상품등록</a></li>
+								
 							</ul>
 						</div>
 						<!-- /store top filter -->
@@ -438,7 +457,7 @@
 									</div>
 									<div class="product-body">
 										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
+										<h3 class="product-name"><a href="${ path }/detail">product name goes here</a></h3>
 										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
 										<div class="product-rating">
 											<i class="fa fa-star"></i>

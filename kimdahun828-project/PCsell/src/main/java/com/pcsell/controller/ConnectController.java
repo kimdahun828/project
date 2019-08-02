@@ -16,10 +16,10 @@ public class ConnectController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ConnectController.class);
 	
-	@RequestMapping(value = "/view-cart", method = RequestMethod.GET)
+	@RequestMapping(value = "/productList", method = RequestMethod.GET)
 	public String viewCart(Locale locale, Model model) {
 
-		return "basket";
+		return "productList";
 	}
 	
 	@RequestMapping(value = "/checkout", method = RequestMethod.GET)
@@ -33,5 +33,12 @@ public class ConnectController {
 
 		return "detail";
 	}
+	
+	@RequestMapping(value = "/productWrite", method = RequestMethod.GET)
+	public String productWrite(Locale locale, Model model) {
+
+		return "productWrite";
+	}
+	
 	
 }
