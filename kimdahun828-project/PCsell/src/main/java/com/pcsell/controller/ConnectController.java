@@ -10,6 +10,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class ConnectController {
 	
+
+	@RequestMapping(value = "/productList", method = RequestMethod.GET)
+	public String viewCart(Locale locale, Model model) {
+
+		return "productList";
+	}
+	
 	@RequestMapping(value = "/checkout", method = RequestMethod.GET)
 	public String checkOut(Locale locale, Model model) {
 
@@ -46,5 +53,11 @@ public class ConnectController {
 
 		return "detail";
 	}	
+	@RequestMapping(value = "/productWrite", method = RequestMethod.GET)
+	public String productWrite(Locale locale, Model model) {
+
+		return "productWrite";
+	}
+	
 	
 }

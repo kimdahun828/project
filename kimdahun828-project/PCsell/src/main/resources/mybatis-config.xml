@@ -5,8 +5,9 @@
 
 <configuration>
 
-	<!--Type에 지정된 package 경로를 alias에 지정된 Member라는 이름으로 대체하는 설정  / Member만 써주는 것으로 com.springdemoweb.vo.Member를 쓴 것이 됨.-->
 	<typeAliases>
+		<typeAlias type="com.pcsell.vo.Product" alias="Product" />
+		<typeAlias type="com.pcsell.vo.Photo" alias="Photo" />
 		<typeAlias type="com.pcsell.vo.Upload" alias="Upload" /> 
 	</typeAliases>
 	
@@ -21,11 +22,10 @@
 			</dataSource>
 		</environment>
 	</environments>
-
-	<!-- SQL + Object Mapping Configuration -->
 	
+	<!-- SQL + Object Mapping Configuration -->
 	<mappers>
-		<mapper resource="com/pcsell/mapper/cart-mapper.xml" />
+		<mapper resource="mapper/product-mapper.xml" />
 	</mappers>
-
+	
 </configuration>

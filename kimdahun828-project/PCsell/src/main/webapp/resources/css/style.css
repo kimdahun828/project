@@ -189,6 +189,14 @@ textarea.input {
   height: 40px;
 }
 
+.select-option {
+  padding: 0px 15px;
+  background: #FFF;
+  border: 1px solid #E4E7ED;
+  height: 40px;
+  width:  150px;
+}
+
 /*-- checkbox & radio input --*/
 
 .input-radio, .input-checkbox {
@@ -1014,7 +1022,7 @@ textarea.input {
   transform: translate(-50%, -5px);
 }
 
-.product .add-to-cart {
+.add-to-cart {
   position: absolute;
   left: 1px;
   right: 1px;
@@ -1029,7 +1037,6 @@ textarea.input {
   transition: 0.2s all;
   z-index: 2;
 }
-
 .product:hover .add-to-cart {
   -webkit-transform: translateY(100%);
   -ms-transform: translateY(100%);
@@ -1037,6 +1044,20 @@ textarea.input {
 }
 
 .product .add-to-cart .add-to-cart-btn {
+  position: relative;
+  border: 2px solid transparent;
+  height: 40px;
+  padding: 0 30px;
+  background-color: #ef233c;
+  color: #FFF;
+  text-transform: uppercase;
+  font-weight: 700;
+  border-radius: 40px;
+  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
+}
+
+.add-to-cart-btn {
   position: relative;
   border: 2px solid transparent;
   height: 40px;
@@ -1307,8 +1328,20 @@ textarea.input {
 
 .store-grid li {
   display: inline-block;
-  width: 40px;
+  width: 100px;
   height: 40px;
+  line-height: 40px;
+  background-color: #FFF;
+  border: 1px solid #E4E7ED;
+  text-align: center;
+  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
+}
+
+.store-grid li-b {
+  display: inline-block;
+  width: 100px;
+  height: 60px;
   line-height: 40px;
   background-color: #FFF;
   border: 1px solid #E4E7ED;
@@ -1319,6 +1352,10 @@ textarea.input {
 
 .store-grid li+li {
   margin-left: 5px;
+}
+
+.store-grid li+li-b {
+  margin-left: 10px;
 }
 
 .store-grid li:hover {
