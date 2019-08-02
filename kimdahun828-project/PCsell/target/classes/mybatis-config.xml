@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE configuration
+	PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<!--Type에 지정된 package 경로를 alias에 지정된 Member라는 이름으로 대체하는 설정  / Member만 써주는 것으로 com.springdemoweb.vo.Member를 쓴 것이 됨.-->
+	<typeAliases>
+		<typeAlias type="com.pcsell.vo.Upload" alias="Upload" /> 
+	</typeAliases>
+	
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="oracle.jdbc.OracleDriver" />
+				<property name="url" value="jdbc:oracle:thin:@211.197.18.246:1551:xe" />
+				<property name="username" value="PC" />
+				<property name="password" value="PC" />
+			</dataSource>
+		</environment>
+	</environments>
+
+	<!-- SQL + Object Mapping Configuration -->
+	
+	<mappers>
+		<mapper resource="com/pcsell/mapper/cart-mapper.xml" />
+	</mappers>
+
+</configuration>

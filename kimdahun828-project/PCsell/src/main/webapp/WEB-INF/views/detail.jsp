@@ -66,7 +66,7 @@
 						<!-- LOGO -->
 						<div class="col-md-3">
 							<div class="header-logo">
-								<a href="#" class="logo">
+								<a href="/PCsell" class="logo">
 									<img src="/PCsell/resources/img/logo.png" alt="">
 								</a>
 							</div>
@@ -176,10 +176,8 @@
 						<li class="active"><a href="#">Home</a></li>
 						<li><a href="#">Hot Deals</a></li>
 						<li><a href="#">Categories</a></li>
-						<li><a href="#">Laptops</a></li>
-						<li><a href="#">Smartphones</a></li>
-						<li><a href="#">Cameras</a></li>
-						<li><a href="#">Accessories</a></li>
+						<li><a href="laptop">Laptops</a></li>
+						<li><a href="accessories">Accessories</a></li>
 					</ul>
 					<!-- /NAV -->
 				</div>

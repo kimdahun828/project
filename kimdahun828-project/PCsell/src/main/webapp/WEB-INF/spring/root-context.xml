@@ -1,8 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:jee="http://www.springframework.org/schema/jee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/jee https://www.springframework.org/schema/jee/spring-jee.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" >
+		<property name="location" value="classpath:env.properties" />
+	</bean>
+
+	<!-- src/main/resources/env.properties와 연관  -->
+	<!-- Apache Commons DBCP -->
+	<bean id="dataSource"
+				class="org.apache.commons.dbcp2.BasicDataSource">
+			<property name="driverClassName" value="${ds.driver}" />
+			<property name="url" value="${ds.url}" />
+			<property name="username" value="${ds.username}" />
+			<property name="password" value="${ds.password}" />
+			<property name="maxIdle" value="${ds.maxidle}" />
+			<property name="maxTotal" value="${ds.maxtotal}" />
+			<property name="maxWaitMillis" value="${ds.waitmillis}" />
+	</bean>
+
+	<!-- SqlSessionFactoryBean.getObject() => SqlSessionFactory를 반환 -->
+	<bean id="sqlSessionFactory"
+		  class="org.mybatis.spring.SqlSessionFactoryBean"> <!-- sqlsessionfactorybean객체다. -->
+		  <property name="dataSource" ref="dataSource" />
+		  <property name="configLocation" value="classpath:mybatis-config.xml" /> <!-- 연결 설정정보가 있는 위치 알려준다. -->
+	</bean>
+	
+	<!-- Spring SqlSessionTemplate(<= SqlSession을 내장) 객체 등록 -->
+	<bean id="sqlSessionTemplate"
+		  class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory" />	 
+	</bean>
+
+	
+	<bean id="cartDao"
+		class="com.pcsell.dao.CartDaoImpl">
+		<property name="cartMapper" ref="cartMapper" />
+	</bean>
+
+	
+	<bean id="cartService"
+		class="com.pcsell.service.CartServiceImpl">
+		<property name="cartDao" ref="cartDao" />
+	</bean>
+	
+	<bean id="cartMapper"
+		class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.pcsell.mapper.CartMapper" />
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
+	</bean>
+
 </beans>
