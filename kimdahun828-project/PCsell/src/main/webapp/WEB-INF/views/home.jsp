@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="path" value="${ pageContext.request.contextPath }"/>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -51,7 +52,7 @@
 					</ul>
 					<ul class="header-links pull-right">
 						<li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-						<li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
+						<li><a href="/PCsell/member/login"><i class="fa fa-user-o"></i> My Account</a></li>
 					</ul>
 				</div>
 			</div>
@@ -66,7 +67,7 @@
 						<!-- LOGO -->
 						<div class="col-md-3">
 							<div class="header-logo">
-								<a href="#" class="logo">
+								<a href="${ path }/" class="logo">
 									<img src="/PCsell/resources/img/logo.png" alt="">
 								</a>
 							</div>
@@ -138,7 +139,7 @@
 											<h5>SUBTOTAL: $2940.00</h5>
 										</div>
 										<div class="cart-btns">
-											<a href="view-cart">View Cart</a>
+											<a href="cart/view-cart">View Cart</a>
 											<a href="checkout">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
 										</div>
 									</div>
@@ -174,10 +175,10 @@
 					<!-- NAV -->
 					<ul class="main-nav nav navbar-nav">
 						<li class="active"><a href="#">Home</a></li>
-						<li><a href="#">Categories</a></li>
-						<li><a href="#"></a></li>
-						<li><a href="#"></a></li>
-						<li><a href="boardlist">Board</a></li>
+						<li><a href="#">Hot Deals</a></li>
+						<li><a href="${ path }/productList">Categories</a></li>
+						<li><a href="#">Laptops</a></li>
+						<li><a href="#">Accessories</a></li>
 					</ul>
 					<!-- /NAV -->
 				</div>
@@ -201,7 +202,7 @@
 							</div>
 							<div class="shop-body">
 								<h3>Laptop<br>Collection</h3>
-								<a href="#" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+								<a href="laptop" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
 					</div>
@@ -215,7 +216,7 @@
 							</div>
 							<div class="shop-body">
 								<h3>Accessories<br>Collection</h3>
-								<a href="#" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+								<a href="accessories" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
 					</div>
@@ -229,7 +230,7 @@
 							</div>
 							<div class="shop-body">
 								<h3>Memory<br>Collection</h3>
-								<a href="#" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+								<a href="memory" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
 					</div>

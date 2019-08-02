@@ -10,38 +10,58 @@
 						http://www.springframework.org/schema/jee https://www.springframework.org/schema/jee/spring-jee.xsd
 						http://www.springframework.org/schema/tx https://www.springframework.org/schema/tx/spring-tx.xsd
 						http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
-	
-	<!-- Root Context: defines shared resources visible to all other web components -->
 
-	<context:component-scan base-package="com.pcsell.repository" />
-	<context:component-scan base-package="com.pcsell.service" />
-	
-	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" >
 		<property name="location" value="classpath:env.properties" />
 	</bean>
 	
-	<!-- Apache Commons DBCP -->
-	<bean id="dataSource"
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+
+	<context:component-scan base-package="com.pcsell.repository" />
+	<context:component-scan base-package="com.pcsell.service" />
+		
+		<bean id="dataSource"
 		  class="org.apache.commons.dbcp2.BasicDataSource">
-		<property name="driverClassName" value="${ds.driver}" />
-		<property name="url" value="${ds.url}" />
-		<property name="username" value="${ds.username}" />
-		<property name="password" value="${ds.password}" />
-		<property name="maxIdle" value="${ds.maxidle}" />
-		<property name="maxTotal" value="${ds.maxtotal}" />
-		<property name="maxWaitMillis" value="${ds.waitmillis}" />
+		  <property name="driverClassName" value="${ds.driver}" />
+		  <property name="url" value="${ds.url}" />
+		  <property name="username" value="${ds.username}" />
+		  <property name="password" value="${ds.password}" />
+		  <property name="maxIdle" value="10" />
+		  <property name="maxTotal" value="20" />
+		  <property name="maxWaitMillis" value="-1" />
+		 </bean> 
+		
+	<!-- SqlSessionFactoryBean.getObject() -> SqlSessionfactory를 반환 -->
+	<bean id="sqlSessionFactory"
+		  class="org.mybatis.spring.SqlSessionFactoryBean">
+		 <property name="dataSource" ref="dataSource" />
+		 <property name="configLocation" value="classpath:mybatis-config.xml" />
 	</bean>
 	
-	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
-	
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource"/>
-		<property name="configLocation" value="classpath:mybatis-config.xml"/>
-	</bean> 
-	
-	<!-- Spring SqlSessionTemplate(sqlSession을 내장) 객체 등록 -->
+	<!--  Spring SqlSessionTemplate (SqlSession을 내장) 객체 등록 -->
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg ref="sqlSessionFactory" />
+		<constructor-arg ref="sqlSessionFactory" />	  
+	</bean>
+
+	<context:component-scan base-package="com.pcsell" use-default-filters="true">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	
+		<bean id="cartDao"
+		class="com.pcsell.dao.CartDaoImpl">
+		<property name="cartMapper" ref="cartMapper" />
+	</bean>
+	
+	<bean id="cartService"
+		class="com.pcsell.service.CartServiceImpl">
+		<property name="cartDao" ref="cartDao" />
+	</bean>
+	
+	<bean id="cartMapper"
+		class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.pcsell.mapper.CartMapper" />
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
 	</bean>
 	
 	<bean id="boardRepository" class="com.pcsell.repository.BoardRepositoryImpl">
@@ -58,4 +78,5 @@
 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
 	</bean>
 	
+	<import resource="SJK-context.xml"/>
 </beans>

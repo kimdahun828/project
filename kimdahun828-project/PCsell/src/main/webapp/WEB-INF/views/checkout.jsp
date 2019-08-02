@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="path" value="${ pageContext.request.contextPath }"/>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -66,7 +67,7 @@
 						<!-- LOGO -->
 						<div class="col-md-3">
 							<div class="header-logo">
-								<a href="#" class="logo">
+								<a href="${ path }" class="logo">
 									<img src="/PCsell/resources/img/logo.png" alt="">
 								</a>
 							</div>
@@ -138,8 +139,8 @@
 											<h5>SUBTOTAL: $2940.00</h5>
 										</div>
 										<div class="cart-btns">
-											<a href="#">View Cart</a>
-											<a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+											<a href="cart/view-cart">View Cart</a>
+											<a href="PCsell/checkout">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
 										</div>
 									</div>
 								</div>

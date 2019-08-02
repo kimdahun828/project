@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pcsell.mapper.CartMapper">
+<!-- 패키지 이름 = com.springdemoweb.mapper / 클래스 이름 = MemberMapper / 메소드 이름은  selectMemberByIdAndPasswd 라고 보면 된다.-->
+
+	<select id="findCheckList" resultType="com.pcsell.vo.Upload">
+		SELECT pcCode, name, price, count, discount
+		FROM product
+	<!-- 	WHERE pccode = #{pccode} --> <!-- 코드가 일치 하는 것의 상품 정보 가져오기 -->
+	</select>
+	<select id="count" resultType="com.pcsell.vo.Upload">
+		SELECT count(*)
+		FROM product
+		<!-- WHERE pccode = #{pccode}--><!-- 코드가 일치 하는 것의 갯수. -->
+	</select>
+	
+
+	<!-- /////////////////////////////////////////////////////////////////////////////////// -->
+	
+	<!-- SQL의 조회 결과(컬럼)와 객체의 프로퍼티를 명시적으로 매핑하는 설정 -->
+	<resultMap id="uploadMap" type="com.pcsell.vo.Upload">
+		<id column="uploadNo" property="uploadNo" />
+		<result column="pcCode" property="pcCode" />
+		<result column="name" property="name" />
+		<result column="price" property="price" />
+		<result column="sum" property="sum" />
+		<result column="count" property="count" />
+		<result column="discount" property="discount" />
+		<result column="cartdate" property="cartdate" />
+		<result column="remove" property="remove" />
+	</resultMap>
+	
+	<!-- SQL의 조회 결과(컬럼)와 객체의 프로퍼티를 명시적으로 매핑하는 설정 -->
+	<resultMap id="uploadFileMap" type="com.pcsell.vo.UploadFile">
+		<id column="uploadFileNo" property="uploadFileNo" />
+		<result column="pccode" property="pccode" />
+		<result column="savedFileName" property="savedFileName" />
+		<result column="userFileName" property="userFileName" />
+	</resultMap>
+	
+	<!-- /////////////////////////////////////////////////////////////////////////////////////// -->
+
+	
+</mapper>

@@ -4,11 +4,14 @@
 	PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-	<!-- type에 지정된 some.package.name.ClassName을 alias에 지정된 이름으로 대체하는 설정 -->
-	<typeAliases>
-		<typeAlias type="com.pcsell.vo.board" alias="board" />
-	</typeAliases>
 
+	<typeAliases>
+		<typeAlias type="com.pcsell.vo.Product" alias="Product" />
+		<typeAlias type="com.pcsell.vo.Photo" alias="Photo" />
+		<typeAlias type="com.pcsell.vo.Upload" alias="Upload" />
+		<typeAlias type="com.pcsell.vo.board" alias="board" /> 
+	</typeAliases>
+	
 	<environments default="development">
 		<environment id="development">
 			<transactionManager type="JDBC" />
@@ -23,7 +26,8 @@
 	
 	<!-- SQL + Object Mapping Configuration -->
 	<mappers>
+		<mapper resource="com/pcsell/mapper/product-mapper.xml" />
 		<mapper resource="com/pcsell/mapper/board-mapper.xml" />
-
+		<mapper resource="com/pcsell/mapper/cart-mapper.xml" />
 	</mappers>
 </configuration>
