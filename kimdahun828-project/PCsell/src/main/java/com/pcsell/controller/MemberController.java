@@ -43,7 +43,7 @@ public class MemberController {
 	@RequestMapping(path = "login", method = RequestMethod.POST)
 	public String login(String id, String passwd, HttpSession session) {
 		
-		Member member = memberService.findMemberByIdPasswd(id, passwd);
+		Member member = memberService.findMemberByIdAndPasswd(id, passwd);
 		
 		if (member != null) {
 			session.setAttribute("loginuwer", member);
