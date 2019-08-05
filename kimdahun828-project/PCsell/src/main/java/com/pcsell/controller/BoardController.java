@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.pcsell.service.BoardService;
-import com.pcsell.vo.board;
+import com.pcsell.vo.Board;
 
 
 @Controller
@@ -30,7 +30,7 @@ public class BoardController {
 	public String board(Model model) {
 
 //		Member loginuser = (Member) session.getAttribute("loginuser");	
-		List<board> board = boardService.boardList();
+		List<Board> board = boardService.boardList();
 		
 //		model.addAttribute("loginuser", loginuser);
 		

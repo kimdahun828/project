@@ -1,14 +1,14 @@
 package com.pcsell.service;
 
+import java.util.HashMap;
 import java.util.List;
 
-import com.pcsell.vo.Upload;
-import com.pcsell.vo.UploadFile;
+import com.pcsell.vo.Product;
 
 public interface CartService {
 
-	List<Upload> count();
+	List<Product> findCheckList(HashMap<String, Object> params);
 
-	List<Upload> findCheckList();
+	void cartadd(HashMap<String, Object> params);
 
 }

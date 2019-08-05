@@ -32,7 +32,6 @@
 		  <property name="maxWaitMillis" value="-1" />
 		 </bean> 
 		
-	<!-- SqlSessionFactoryBean.getObject() -> SqlSessionfactory를 반환 -->
 	<bean id="sqlSessionFactory"
 		  class="org.mybatis.spring.SqlSessionFactoryBean">
 		 <property name="dataSource" ref="dataSource" />
@@ -48,14 +47,14 @@
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
 	
-		<bean id="cartDao"
-		class="com.pcsell.dao.CartDaoImpl">
+	<bean id="cartRepository"
+		class="com.pcsell.repository.CartRepositoryImpl">
 		<property name="cartMapper" ref="cartMapper" />
 	</bean>
 	
 	<bean id="cartService"
 		class="com.pcsell.service.CartServiceImpl">
-		<property name="cartDao" ref="cartDao" />
+		<property name="cartRepository" ref="cartRepository" />
 	</bean>
 	
 	<bean id="cartMapper"
@@ -78,5 +77,21 @@
 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
 	</bean>
 	
-	<import resource="SJK-context.xml"/>
+	<bean id="productRepository"
+		  class="com.pcsell.repository.ProductRepositoryImpl">
+		<property name="sessionTemplate" ref="sqlSessionTemplate" />
+		<property name="productMapper" ref="productMapper" />	  
+	</bean>
+
+	<bean id="productService"
+		  class="com.pcsell.service.ProductServiceImpl">
+		<property name="productRepository" ref="productRepository" />
+	</bean>
+
+	<bean id="productMapper"
+		  class="org.mybatis.spring.mapper.MapperFactoryBean"> 
+		<property name="mapperInterface"
+				  value="com.pcsell.mapper.ProductMapper" />
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
+	</bean>
 </beans>

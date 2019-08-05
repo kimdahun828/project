@@ -36,7 +36,7 @@ public class ProductController {
 			value="/productWrite",
 			method=RequestMethod.POST)
 	public String productWrite(MultipartHttpServletRequest req, Product product) {
-		
+
 		MultipartFile mf = req.getFile("productImage");
 		if (mf != null) {
 			
@@ -56,8 +56,6 @@ public class ProductController {
 				Photo photo = new Photo();
 				photo.setUserFileName(userFileName);
 				photo.setSavedFileName(savedFileName);
-//				uploadFile.setUploadNo(newUploadNo);
-//				uploadService.registerUploadFile(uploadFile);
 				ArrayList<Photo> files = new ArrayList<Photo>();
 				files.add(photo);
 				product.setFiles(files);

@@ -1,8 +1,8 @@
-package com.pcsell.dao;
+package com.pcsell.repository;
 
 import com.pcsell.vo.Member;
 
-public interface MemberDao {
+public interface MemberRepository {
 	
 	void insertMember(Member member);
 	

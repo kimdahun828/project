@@ -1,14 +1,15 @@
-package com.pcsell.dao;
+package com.pcsell.repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.pcsell.mapper.CartMapper;
-import com.pcsell.vo.Upload;
+import com.pcsell.vo.Product;
 
-public class CartDaoImpl implements CartDao {
+public class CartRepositoryImpl implements CartRepository {
 	
 	//JDBC의 구조 코드를 단순하게 만드는 스프링의 클래스
 	private JdbcTemplate jdbcTemplate;
@@ -28,15 +29,14 @@ public class CartDaoImpl implements CartDao {
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////
 	@Override
-	public ArrayList<Upload> findCheckList() {
-		List<Upload> checkList = cartMapper.findCheckList();
-		return (ArrayList<Upload>)checkList;
+	public ArrayList<Product> findCheckList(HashMap<String, Object> params) {
+		List<Product> checkList = cartMapper.findCheckList(params);
+		return (ArrayList<Product>)checkList;
 	}
-	
 	@Override
-	public ArrayList<Upload> count() {
-		List<Upload> counts = cartMapper.count();
-		return (ArrayList<Upload>)counts;
+	public HashMap<String, Object> addcart(HashMap<String, Object> params) {
+		HashMap<String, Object> cartadd = cartMapper.addcart(params);
+		return cartadd;
 	}
 	
 	

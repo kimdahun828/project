@@ -23,12 +23,5 @@ public class MemberServiceImpl implements MemberService {
 		return null;
 	}
 
-	public Member findMemberByIdPasswd(String id, String passwd) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
-
 	
 }

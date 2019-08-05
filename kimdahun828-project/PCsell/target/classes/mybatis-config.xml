@@ -8,8 +8,9 @@
 	<typeAliases>
 		<typeAlias type="com.pcsell.vo.Product" alias="Product" />
 		<typeAlias type="com.pcsell.vo.Photo" alias="Photo" />
-		<typeAlias type="com.pcsell.vo.Upload" alias="Upload" />
-		<typeAlias type="com.pcsell.vo.board" alias="board" /> 
+		<typeAlias type="com.pcsell.vo.Board" alias="Board" />
+		<typeAlias type="com.pcsell.vo.Cart" alias="Cart" />  
+		<typeAlias type="com.pcsell.vo.Member" alias="Member" />  
 	</typeAliases>
 	
 	<environments default="development">

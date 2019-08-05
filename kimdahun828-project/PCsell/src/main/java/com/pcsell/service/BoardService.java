@@ -2,10 +2,10 @@ package com.pcsell.service;
 
 import java.util.List;
 
-import com.pcsell.vo.board;
+import com.pcsell.vo.Board;
 
 public interface BoardService {
 
-	List<board> boardList();
+	List<Board> boardList();
 	
 }

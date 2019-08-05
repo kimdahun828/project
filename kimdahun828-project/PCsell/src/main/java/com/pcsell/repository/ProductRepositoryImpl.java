@@ -1,4 +1,4 @@
-package com.pcsell.dao;
+package com.pcsell.repository;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -7,7 +7,7 @@ import com.pcsell.vo.Photo;
 import com.pcsell.vo.Product;
 import com.pcsell.mapper.ProductMapper;
 
-public class ProductDao {
+public class ProductRepositoryImpl implements ProductRepository {
 
 	private JdbcTemplate jdbcTemplate;
 	public JdbcTemplate getJdbcTemplate() {
@@ -33,14 +33,14 @@ public class ProductDao {
 	public void setProductMapper(ProductMapper productMapper) {
 		this.productMapper = productMapper;
 	}
-	
+	@Override
 	public String insertProduct(Product product) {
 		
 		productMapper.insertProduct(product);
 		
 		return product.getPcCode();
 	}
-	
+	@Override
 	public void insertProductImage(Photo photo) {
 		
 		productMapper.insertProductImage(photo);

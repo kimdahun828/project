@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import lombok.Data;
 
 @Data
-public class board {
+public class Board {
 	//private int no; 
 	private String title;
 	private String content;

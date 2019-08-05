@@ -1,4 +1,4 @@
-package com.pcsell.dao;
+package com.pcsell.repository;
 
 import java.util.HashMap;
 
@@ -7,7 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import com.pcsell.mapper.MemberMapper;
 import com.pcsell.vo.Member;
 
-public class MemberDaoImpl implements MemberDao {
+public class MemberRepositoryImpl implements MemberRepository {
 	
 	private SqlSessionTemplate sessionTemplate;
 
@@ -29,13 +29,11 @@ public class MemberDaoImpl implements MemberDao {
 		this.memberMapper = memberMapper;
 	}
 
-	@Override
 	public void insertMember(Member member) {
 
 		memberMapper.insertMember(member);
 		
 	}
-
 	@Override
 	public Member selectMemberByIdAndPasswd(String id, String passwd) {
 		

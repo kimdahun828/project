@@ -1,34 +1,34 @@
 package com.pcsell.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.pcsell.dao.CartDao;
-import com.pcsell.vo.Upload;
-import com.pcsell.vo.UploadFile;
+import com.pcsell.repository.CartRepository;
+import com.pcsell.vo.Product;
  
-@Service("cartService")
 public class CartServiceImpl implements CartService {
 	
 
-	private CartDao cartDao;	
-	public CartDao getCartDao() {
-		return cartDao;
+	private CartRepository cartRepository;	
+	public CartRepository getCartRepository() {
+		return cartRepository;
 	}
-	public void setCartDao(CartDao cartDao) {
-		this.cartDao = cartDao;
+	public void setCartRepository(CartRepository cartRepository) {
+		this.cartRepository = cartRepository;
 	}
 	
 	@Override
-	public ArrayList<Upload> count() { // list 총 권수
-		ArrayList<Upload> counts = cartDao.count();
-		return counts;
+	public void cartadd(HashMap<String, Object> params) {
+		HashMap<String, Object> cartadd = cartRepository.addcart(params);
+		return; // return값 없다. insert
+		
 	}
 	@Override
-	public List<Upload> findCheckList() {
-		ArrayList<Upload> checkList = cartDao.findCheckList();
+	public List<Product> findCheckList(HashMap<String, Object> params) {
+		ArrayList<Product> checkList = cartRepository.findCheckList(params);
 		return checkList;
 	}
 	

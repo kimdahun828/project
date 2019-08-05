@@ -1,16 +1,15 @@
 package com.pcsell.mapper; 
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import com.pcsell.vo.Upload;
-import com.pcsell.vo.UploadFile;
+import com.pcsell.vo.Product;
 
 
 public interface CartMapper {
-	
-	List<Upload> count();
 
-	List<Upload> findCheckList();
+	List<Product> findCheckList(HashMap<String, Object> params);
+
+	HashMap<String, Object> addcart(HashMap<String, Object> params);
 
 }
