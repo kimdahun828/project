@@ -48,4 +48,16 @@ public class MemberDaoImpl implements MemberDao {
 		return member;
 	}
 
+	@Override
+	public boolean loginCheck(Member vo) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Member viewMember(Member vo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

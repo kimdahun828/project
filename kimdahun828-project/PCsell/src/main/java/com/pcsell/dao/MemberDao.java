@@ -8,4 +8,10 @@ public interface MemberDao {
 	
 	Member selectMemberByIdAndPasswd(String id, String passwd);
 
+	boolean loginCheck(Member vo);
+
+	Member viewMember(Member vo);
+
+	
+
 }
