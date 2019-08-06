@@ -2,6 +2,44 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${ pageContext.request.contextPath }"/>
 
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+		<title>Electro - HTML Ecommerce Template</title>
+
+		<!-- Google font -->
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+
+		<!-- Bootstrap -->
+		<link type="text/css" rel="stylesheet" href="/PCsell/resources/css/bootstrap.min.css"/>
+
+		<!-- Slick -->
+		<link type="text/css" rel="stylesheet" href="/PCsell/resources/css/slick.css"/>
+		<link type="text/css" rel="stylesheet" href="/PCsell/resources/css/slick-theme.css"/>
+
+		<!-- nouislider -->
+		<link type="text/css" rel="stylesheet" href="/PCsell/resources/css/nouislider.min.css"/>
+
+		<!-- Font Awesome Icon -->
+		<link rel="stylesheet" href="/PCsell/resources/css/font-awesome.min.css">
+
+		<!-- Custom stlylesheet -->
+		<link type="text/css" rel="stylesheet" href="/PCsell/resources/css/style.css"/>
+
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+    </head>
+<body>
 <jsp:include page="include/header.jsp" />
 
 		<!-- BREADCRUMB -->
@@ -13,8 +51,9 @@
 					<div class="col-md-12">
 						<ul class="breadcrumb-tree">
 							<li><a href="${ path }/">Home</a></li>
-							<li class="active">All Categories</li>
-							<li class="category" id="category"><a href="#"></a></li>
+							<li><a href="${ path }/produtList">All Categories</a></li>
+							<li class="category" id="category"><a href="#">category</a></li>
+							<li class="active"></li>
 						</ul>
 					</div>
 				</div>
@@ -251,6 +290,7 @@
 							</div>
 							<ul class="store-grid">
 								<li><a href="${ path }/productWrite">상품등록</a></li>
+								
 							</ul>
 						</div>
 						<!-- /store top filter -->
@@ -348,7 +388,14 @@
 		<!-- /NEWSLETTER -->
 
 		<jsp:include page="include/footer.jsp" />
-		<jsp:include page="include/jsimport.jsp" />
+
+		<!-- jQuery Plugins -->
+		<script src="/PCsell/resources/js/jquery.min.js"></script>
+		<script src="/PCsell/resources/js/bootstrap.min.js"></script>
+		<script src="/PCsell/resources/js/slick.min.js"></script>
+		<script src="/PCsell/resources/js/nouislider.min.js"></script>
+		<script src="/PCsell/resources/js/jquery.zoom.min.js"></script>
+		<script src="/PCsell/resources/js/main.js"></script>
 
 	</body>
 	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
@@ -358,7 +405,6 @@
 	        if($("input[name=CPU]").is(":checked")){
 	        	location.href = "productCategoryList?category=CPU";
 	        	$("#category").text("CPU");
-	        	$("#category").attr("productCategoryList?category=CPU");
 	        }
 	    });
 	    $("input[name=MainBoard]").change(function(){

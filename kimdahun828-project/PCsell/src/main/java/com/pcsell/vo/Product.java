@@ -2,6 +2,7 @@ package com.pcsell.vo;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -19,7 +20,7 @@ public class Product {
 	private String clock;		// 기본 클럭
 	private String chipSet;		// 칩셋 종류
 	private String socket;		// 소켓
-	private String Interface;	// 인터페이스
+	private String interfaceType;	// 인터페이스
 	private String buffer;		// 버퍼 용량
 	private String type;		// 타입
 	private String outPut;		// 출력
@@ -28,5 +29,5 @@ public class Product {
 	private int discount;
 	private String category;
 	
-	private ArrayList<Photo> files;
+	private List<Photo> files;
 }
