@@ -8,4 +8,8 @@ public interface MemberRepository {
 	
 	Member selectMemberByIdAndPasswd(String id, String passwd);
 
+	Member viewMember(Member vo);
+
+	boolean loginCheck(Member vo);
+
 }

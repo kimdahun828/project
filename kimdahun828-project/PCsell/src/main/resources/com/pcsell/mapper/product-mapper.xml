@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pcsell.mapper.ProductMapper">
+
+
+	<insert id="insertProduct"
+			parameterType="Product"
+			useGeneratedKeys="true"
+			keyColumn="pcCode"
+			keyProperty="pcCode">
+				INSERT INTO PRODUCT (
+			PCCODE
+			, NAME
+			, DIVISION
+			, COMPANYNAME
+			, GENERATION
+			, CORE
+			, THREAD
+			, CAPACITY
+			, CLOCK
+			, CHIPSET
+			, SOCKET
+			, INTERFACE
+			, BUFFER
+			, TYPE
+			, OUTPUT
+			, PRICE
+			, COUNT
+			, CATEGORY
+		)
+		VALUES (
+			SYS_GUID()
+			, #{ name }
+			, #{ division }
+			, #{ companyName }
+			, #{ generation }
+			, #{ core }
+			, #{ thread }
+			, #{ capacity }
+			, #{ clock }
+			, #{ chipSet }
+			, #{ socket }
+			, #{ Interface }
+			, #{ buffer }
+			, #{ type }
+			, #{ outPut }
+			, #{ price }
+			, #{ count }
+			, #{ category }
+		)
+	</insert>
+
+	<insert id="insertProductImage" parameterType="Photo">
+		INSERT INTO PHOTO (
+			PCCODE
+			, USERFILENAME
+			, SAVEDFILENAME
+		)
+		VALUES (
+			#{ pcCode }
+			, #{ userFileName }
+			, #{ savedFileName }
+		)
+	</insert>
+	
+	<select id="dramList" resultType="Product">
+		SELECT pcCode, name, price
+		FROM product
+		WHERE category = 'RAM'	
+	</select>
+	
+	<select id="dramFileList" parameterType="String" resultType="Photo">
+		SELECT pcCode, userFileName, savedFileName
+		FROM photo
+		WHERE pcCode = #{pcCode}
+	</select>
+	
+	<select id="dramDetailList" parameterType="String" resultType="Product">
+		SELECT pcCode, name, price
+		FROM product
+		WHERE category = 'RAM'	and pcCode = #{pcCode}
+	</select>
+	
+	<select id="dramDetailFileListByPcCode" parameterType="Product" resultType="Photo">
+		SELECT pcCode, userFileName, savedFileName
+		FROM photo
+		WHERE pcCode = #{pcCode}
+	</select>
+
+	<select id="search" parameterType="hashmap" resultType="Product">
+		SELECT pcCode, name, price
+		FROM product
+		WHERE name like '%'||#{ name }||'%' and category = #{category}
+	</select>
+
+	<select id="searchFileListByPcCode" parameterType="hashmap" resultType="Photo">
+		SELECT pcCode, userFileName, savedFileName
+		FROM photo
+		WHERE pcCode in (SELECT pcCode FROM product WHERE category like #{ category } and name like '%'||#{ name }||'%')
+	</select>
+
+</mapper>

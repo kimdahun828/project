@@ -1,7 +1,7 @@
 package com.pcsell.vo;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -27,6 +27,6 @@ public class Product {
 	private int count;			// 수량
 	private int discount;
 	private String category;
-	
-	private ArrayList<Photo> files;
+	 
+	private List<Photo> files;
 }

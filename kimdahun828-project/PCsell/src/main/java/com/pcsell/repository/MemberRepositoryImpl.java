@@ -3,11 +3,20 @@ package com.pcsell.repository;
 import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.pcsell.mapper.MemberMapper;
 import com.pcsell.vo.Member;
 
 public class MemberRepositoryImpl implements MemberRepository {
+	
+	private JdbcTemplate jdbcTemplate;
+	public JdbcTemplate getJdbcTemplate() {
+		return jdbcTemplate;
+	}
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+	}
 	
 	private SqlSessionTemplate sessionTemplate;
 
@@ -44,6 +53,18 @@ public class MemberRepositoryImpl implements MemberRepository {
 		Member member = memberMapper.selectMemberByIdAndPasswd(params);
 		
 		return member;
+	}
+
+	@Override
+	public Member viewMember(Member vo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean loginCheck(Member vo) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

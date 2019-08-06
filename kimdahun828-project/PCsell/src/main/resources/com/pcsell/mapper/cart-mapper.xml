@@ -6,42 +6,68 @@
 <mapper namespace="com.pcsell.mapper.CartMapper">
 <!-- 패키지 이름 = com.springdemoweb.mapper / 클래스 이름 = MemberMapper / 메소드 이름은  selectMemberByIdAndPasswd 라고 보면 된다.-->
 
-	<select id="findCheckList" resultType="com.pcsell.vo.Upload">
-		SELECT pcCode, name, price, count, discount
-		FROM product
-	<!-- 	WHERE pccode = #{pccode} --> <!-- 코드가 일치 하는 것의 상품 정보 가져오기 -->
-	</select>
-	<select id="count" resultType="com.pcsell.vo.Upload">
-		SELECT count(*)
-		FROM product
-		<!-- WHERE pccode = #{pccode}--><!-- 코드가 일치 하는 것의 갯수. -->
+
+	<select id="findCheckList" parameterType="String" resultType="Cart">
+		SELECT pcCode, name, price
+		FROM cart 
+		  <!-- 유저와 날짜가 같은 것의 카트 내용을 가져옴. WHERE id = #{id}-->
 	</select>
 	
 
-	<!-- /////////////////////////////////////////////////////////////////////////////////// -->
+	<select id="findCheckList2" parameterType="hashmap" resultType="Cart">
+		SELECT pcCode, name, price, cartDate
+		FROM cart 
+		WHERE cartDate >= to_date(#{date}) and cartDate <![CDATA[<]]> to_date(#{date}) +1 
+		  <!-- 유저와(로그인 기능 완성 되면 추가) 날짜가 같은 것의 카트 내용을 가져옴. and cartDate = #{cartDate}-->
+	</select>
 	
-	<!-- SQL의 조회 결과(컬럼)와 객체의 프로퍼티를 명시적으로 매핑하는 설정 -->
-	<resultMap id="uploadMap" type="com.pcsell.vo.Upload">
-		<id column="uploadNo" property="uploadNo" />
-		<result column="pcCode" property="pcCode" />
-		<result column="name" property="name" />
-		<result column="price" property="price" />
-		<result column="sum" property="sum" />
-		<result column="count" property="count" />
-		<result column="discount" property="discount" />
-		<result column="cartdate" property="cartdate" />
-		<result column="remove" property="remove" />
-	</resultMap>
+	<insert id="addcart" parameterType="String"> <!-- 카트에 담는 용도 -->
+		INSERT INTO cart(pcCode, name, price, cartDate) 
+			SELECT pcCode, name, price, sysdate 
+			FROM product
+			WHERE name = #{name} 
+	</insert>
 	
-	<!-- SQL의 조회 결과(컬럼)와 객체의 프로퍼티를 명시적으로 매핑하는 설정 -->
-	<resultMap id="uploadFileMap" type="com.pcsell.vo.UploadFile">
-		<id column="uploadFileNo" property="uploadFileNo" />
-		<result column="pccode" property="pccode" />
-		<result column="savedFileName" property="savedFileName" />
-		<result column="userFileName" property="userFileName" />
-	</resultMap>
+	<insert id="ramCartAdd" parameterType="String"> <!-- 카트에 담는 용도 -->
+		INSERT INTO cart(pcCode, name, price, cartDate)
+			SELECT pcCode, name, price, sysdate
+			FROM product
+			WHERE pcCode = #{pcCode} 
+	</insert>
 	
-	<!-- /////////////////////////////////////////////////////////////////////////////////////// -->
+	<select id="ramCartList" parameterType="Date" resultType="Cart">
+		SELECT pcCode, name, price, cartDate
+		FROM cart
+		WHERE cartDate >= to_date(#{date}) and cartDate <![CDATA[<]]> to_date(#{date}) +1 
+		<!-- 유저와 날짜가 같은 것의 카트 내용을 가져옴.-->
+	</select>
+	
+	<select id="checkOut" parameterType= "HashMap" resultType="Cart">
+		SELECT pcCode, name, price
+		FROM cart
+		WHERE pcCode = #{pcCode} and price = #{price}
+	</select>
 
+	<delete id="cartDelete" parameterType="hashmap">
+		DELETE from cart
+		WHERE cartDate = #{date}
+		  <!-- 유저와(로그인 기능 완성 되면 추가) 날짜가 같은 것의 카트 내용을 가져옴. and cartDate = #{cartDate}-->
+	</delete>
 	
+	<select id="cartSum" parameterType="hashmap" resultType="Cart">
+		SELECT sum(price) as sum
+		FROM cart 
+		WHERE cartDate >= to_date(#{date}) and cartDate <![CDATA[<]]> to_date(#{date}) +1 
+		  <!-- 유저와(로그인 기능 완성 되면 추가) 날짜가 같은 것의 카트 내용을 가져옴. and cartDate = #{cartDate}-->
+	</select>
+	
+	<!-- 
+	<select id="cartlist" resultType="cart"> 카트 확인 용도 
+		SELECT *
+		FROM cart
+		WHERE cartDate = #{cartDate} and id = #{id} 카트 담은 날짜와 id가 일치하는 것을 불러옴
+	</select>
+	
+	 -->
 </mapper>
+

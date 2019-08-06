@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="path" value="${ pageContext.request.contextPath }"/>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -66,7 +67,7 @@
 						<!-- LOGO -->
 						<div class="col-md-3">
 							<div class="header-logo">
-								<a href="#" class="logo">
+								<a href="${path }" class="logo">
 									<img src="/PCsell/resources/img/logo.png" alt="">
 								</a>
 							</div>
@@ -76,13 +77,17 @@
 						<!-- SEARCH BAR -->
 						<div class="col-md-6">
 							<div class="header-search">
-								<form>
-									<select class="input-select">
-										<option value="0">All Categories</option>
-										<option value="1">Category 01</option>
-										<option value="1">Category 02</option>
+								<form action ="search?$value&$value1" method="get" enctype="multipart/form-data">
+									<select class="input-select" name="category">
+										<option value="CPU">CPU</option>
+										<option value="RAM">RAM</option>
+										<option value="HDD">HDD</option>
+										<option value="SSD">SSD</option>
+										<option value="Power">power</option>
+										<option value="MainBoard">MainBoard</option>
+										<option value="VGA">VGA</option>
 									</select>
-									<input class="input" placeholder="Search here">
+									<input class="input" type="text" value1="textselect" name="name" placeholder="Search here">
 									<button class="search-btn">Search</button>
 								</form>
 							</div>
@@ -138,8 +143,8 @@
 											<h5>SUBTOTAL: $2940.00</h5>
 										</div>
 										<div class="cart-btns">
-											<a href="#">View Cart</a>
-											<a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+											<a href="/PCsell/cart/view-cart">View Cart</a>
+											<a href="/PCsell/cart/checkoutt">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
 										</div>
 									</div>
 								</div>
@@ -175,11 +180,9 @@
 					<ul class="main-nav nav navbar-nav">
 						<li class="active"><a href="#">Home</a></li>
 						<li><a href="#">Hot Deals</a></li>
-						<li><a href="#">Categories</a></li>
+						<li><a href="/PCsell/productList">Categories</a></li>
 						<li><a href="#">Laptops</a></li>
-						<li><a href="#">Smartphones</a></li>
-						<li><a href="#">Cameras</a></li>
-						<li><a href="#">Accessories</a></li>
+						<li><a href="/PCsell/memory">Accessories</a></li>
 					</ul>
 					<!-- /NAV -->
 				</div>

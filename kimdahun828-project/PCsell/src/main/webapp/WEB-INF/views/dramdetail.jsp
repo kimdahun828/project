@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${ pageContext.request.contextPath }"/>
+
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
 
 		<!-- BREADCRUMB -->
@@ -22,7 +23,7 @@
 				<!-- /row -->
 			</div>
 			<!-- /container -->
-		</div>
+		</div> 
 		<!-- /BREADCRUMB -->
 
 		<!-- SECTION -->
@@ -35,19 +36,19 @@
 					<div class="col-md-5 col-md-push-2">
 						<div id="product-main-img">
 							<div class="product-preview">
-								<img src="/PCsell/resources/img/product01.png" alt="">
+								<img src="/PCsell/resources/img/32GB DDR4.jpg" alt="">
 							</div>
 
 							<div class="product-preview">
-								<img src="/PCsell/resources/img/product03.png" alt="">
+								<img src="/PCsell/resources/img/32GB DDR4-1.jpg" alt="">
 							</div>
 
 							<div class="product-preview">
-								<img src="/PCsell/resources/img/product06.png" alt="">
+								<img src="/PCsell/resources/img/32GB DDR4-2.jpg" alt="">
 							</div>
 
 							<div class="product-preview">
-								<img src="/PCsell/resources/img/product08.png" alt="">
+								<img src="/PCsell/resources/img/32GB DDR4-3.jpg" alt="">
 							</div>
 						</div>
 					</div>
@@ -57,19 +58,19 @@
 					<div class="col-md-2  col-md-pull-5">
 						<div id="product-imgs">
 							<div class="product-preview">
-								<img src="/PCsell/resources/img/product01.png" alt="">
+								<img src="/PCsell/resources/img/32GB DDR4.jpg" alt="">
 							</div>
 
 							<div class="product-preview">
-								<img src="/PCsell/resources/img/product03.png" alt="">
+								<img src="/PCsell/resources/img/32GB DDR4-1.jpg" alt="">
 							</div>
 
 							<div class="product-preview">
-								<img src="/PCsell/resources/img/product06.png" alt="">
+								<img src="/PCsell/resources/img/32GB DDR4-2.jpg" alt="">
 							</div>
 
 							<div class="product-preview">
-								<img src="/PCsell/resources/img/product08.png" alt="">
+								<img src="/PCsell/resources/img/32GB DDR4-3.jpg" alt="">
 							</div>
 						</div>
 					</div>
@@ -77,8 +78,11 @@
 
 					<!-- Product details -->
 					<div class="col-md-5">
+						<form action="/PCsell/cart/cartadd2" method="POST">
 						<div class="product-details">
-							<h2 class="product-name">product name goes here</h2>
+						<c:forEach var="dramdetail" items="${ dramdetail }">
+						<input type="hidden" name="pcCode" value="${dramdetail.pcCode }">
+							<h2 class="product-name">${dramdetail.name }</h2>
 							<div>
 								<div class="product-rating">
 									<i class="fa fa-star"></i>
@@ -90,22 +94,24 @@
 								<a class="review-link" href="#">10 Review(s) | Add your review</a>
 							</div>
 							<div>
-								<h3 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h3>
+								<h3 class="product-price">${dramdetail.price }원</h3>
 								<span class="product-available">In Stock</span>
 							</div>
+							</c:forEach>
 							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 
 							<div class="product-options">
-								<label>
+<!-- 								<label>
 									Size
 									<select class="input-select">
 										<option value="0">X</option>
 									</select>
-								</label>
+								</label> -->
 								<label>
-									Color
+									Type
 									<select class="input-select">
-										<option value="0">Red</option>
+										<option value="0">new</option>
+										<option value="1">refurbished</option>
 									</select>
 								</label>
 							</div>
@@ -119,7 +125,7 @@
 										<span class="qty-down">-</span>
 									</div>
 								</div>
-								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+								<button Type="submit" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
 							</div>
 
 							<ul class="product-btns">
@@ -140,8 +146,8 @@
 								<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
 								<li><a href="#"><i class="fa fa-envelope"></i></a></li>
 							</ul>
-
 						</div>
+						</form>
 					</div>
 					<!-- /Product details -->
 
@@ -540,6 +546,7 @@
 		</div>
 		<!-- /NEWSLETTER -->
 
+	
 <jsp:include page="/WEB-INF/views/include/footer.jsp" />
 
 <jsp:include page="/WEB-INF/views/include/jsimport.jsp" />

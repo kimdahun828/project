@@ -12,14 +12,14 @@
 				<div class="row">
 					<div class="col-md-12">
 						<ul class="breadcrumb-tree">
-							<li><a href="${path}">Home</a></li>
-							<li><a href="#">All Categories</a></li>
-							<li><a href="dram">Accessories</a></li>
-							<li class="active">Headphones (227,490 Results)</li>
+							<li><a href="${ path }/">Home</a></li>
+							<li><a href="${ path }/produtList">All Categories</a></li>
+							<li><a href="#"></a></li>
+							<li class="active"></li>
 						</ul>
 					</div>
-				</div>
-				<!-- /row --> 
+				</div> 
+				<!-- /row -->
 			</div>
 			<!-- /container -->
 		</div>
@@ -42,8 +42,26 @@
 									<input type="checkbox" id="category-1">
 									<label for="category-1">
 										<span></span>
-										Laptops
-										<small>(120)</small>
+										CPU
+										<small></small>
+									</label>
+								</div>
+
+								<div class="input-checkbox">
+									<input type="checkbox" id="category-2">
+									<label for="category-2">
+										<span></span>
+										Mainboard
+										<small></small>
+									</label>
+								</div>
+
+								<div class="input-checkbox">
+									<input type="checkbox" id="category-3">
+									<label for="category-3">
+										<span></span>
+										RAM
+										<small></small>
 									</label>
 								</div>
 
@@ -51,8 +69,8 @@
 									<input type="checkbox" id="category-4">
 									<label for="category-4">
 										<span></span>
-										Accessories
-										<small>(578)</small>
+										VGA
+										<small></small>
 									</label>
 								</div>
 
@@ -60,8 +78,35 @@
 									<input type="checkbox" id="category-5">
 									<label for="category-5">
 										<span></span>
-										Laptops
-										<small>(120)</small>
+										SSD
+										<small></small>
+									</label>
+								</div>
+
+								<div class="input-checkbox">
+									<input type="checkbox" id="category-6">
+									<label for="category-6">
+										<span></span>
+										HDD
+										<small></small>
+									</label>
+								</div>
+								
+								<div class="input-checkbox">
+									<input type="checkbox" id="category-7">
+									<label for="category-7">
+										<span></span>
+										Power
+										<small></small>
+									</label>
+								</div>
+								
+								<div class="input-checkbox">
+									<input type="checkbox" id="category-7">
+									<label for="category-7">
+										<span></span>
+										Case
+										<small></small>
 									</label>
 								</div>
 							</div>
@@ -108,12 +153,19 @@
 										<small>(125)</small>
 									</label>
 								</div>
-							
+								<div class="input-checkbox">
+									<input type="checkbox" id="brand-3">
+									<label for="brand-3">
+										<span></span>
+										SONY
+										<small>(755)</small>
+									</label>
+								</div>
 								<div class="input-checkbox">
 									<input type="checkbox" id="brand-4">
 									<label for="brand-4">
 										<span></span>
-										Hynix
+										SAMSUNG
 										<small>(578)</small>
 									</label>
 								</div>
@@ -121,8 +173,16 @@
 									<input type="checkbox" id="brand-5">
 									<label for="brand-5">
 										<span></span>
-										Micron
+										LG
 										<small>(125)</small>
+									</label>
+								</div>
+								<div class="input-checkbox">
+									<input type="checkbox" id="brand-6">
+									<label for="brand-6">
+										<span></span>
+										SONY
+										<small>(755)</small>
 									</label>
 								</div>
 							</div>
@@ -134,33 +194,33 @@
 							<h3 class="aside-title">Top selling</h3>
 							<div class="product-widget">
 								<div class="product-img">
-									<img src="/PCsell/resources/img/32GB DDR4.jpg" alt="">
+									<img src="/PCsell/resources/img/product01.png" alt="">
 								</div>
 								<div class="product-body">
 									<p class="product-category">Category</p>
-									<h3 class="product-name"><a href="dram">SAMSUNG 32GB DDR4 DRAM(laptop)</a></h3>
+									<h3 class="product-name"><a href="#">product name goes here</a></h3>
 									<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
 								</div>
 							</div>
 
 							<div class="product-widget">
 								<div class="product-img">
-									<img src="/PCsell/resources/img/16GB DDR4.jpg" alt="">
+									<img src="/PCsell/resources/img/product02.png" alt="">
 								</div>
 								<div class="product-body">
 									<p class="product-category">Category</p>
-									<h3 class="product-name"><a href="dram">SAMSUNG 16GB DDR4 DRAM</a></h3>
+									<h3 class="product-name"><a href="#">product name goes here</a></h3>
 									<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
 								</div>
 							</div>
 
 							<div class="product-widget">
 								<div class="product-img">
-									<img src="/PCsell/resources/img/8GB DDR4.jpg" alt="">
+									<img src="/PCsell/resources/img/product03.png" alt="">
 								</div>
 								<div class="product-body">
 									<p class="product-category">Category</p>
-									<h3 class="product-name"><a href="#">SAMSUNG 8GB DDR4 DRAM(laptop)</a></h3>
+									<h3 class="product-name"><a href="#">product name goes here</a></h3>
 									<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
 								</div>
 							</div>
@@ -192,6 +252,7 @@
 							</div>
 							<ul class="store-grid">
 								<li><a href="${ path }/productWrite">상품등록</a></li>
+								
 							</ul>
 						</div>
 						<!-- /store top filter -->
@@ -199,28 +260,31 @@
 						<!-- store products -->
 						<div class="row">
 							<!-- product -->
-							<c:forEach var="product" items="${ product }">
-							<div class="col-md-4 col-xs-6">								
+							<c:forEach var="search" items="${ search }">
+							<div class="col-md-4 col-xs-6">
 								<div class="product">
-								<c:if test="${ not empty product.files }">
+								<c:if test="${ not empty search.files }">
 									<div class="product-img">
-										<img src="/PCsell/resources/img/${product.files[0].savedFileName }" alt="">
-										<div class="product-label"><span class="new">NEW</span></div>
-									</div>									
+										<img src="/PCsell/resources/img/${search.files[0].savedFileName }" alt="">
+										<div class="product-label">
+											<span class="sale">-30%</span>
+											<span class="new">NEW</span>
+										</div>
+									</div>
 								</c:if>
 									<form action="/PCsell/cart/cartadd" method="POST">
-									<input type="hidden" name="pcCode" value="${product.pcCode }">
+									<input type="hidden" name="pcCode" value="${search.pcCode }">
 									<div class="product-body">
 										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="dram/${product.pcCode}">${product.name }</a></h3>
-										<h4 class="product-price">${product.price } 원</h4>
+										<h3 class="product-name"><a href="${ path }/detail/${search.pcCode}">${search.name }</a></h3>
+										
+										<h4 class="product-price">${search.price }</h4>
 										<div class="product-rating">
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star"></i>
-
 										</div>
 										<div class="product-btns">
 											<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
@@ -237,9 +301,8 @@
 							</c:forEach>
 							<!-- /product -->
 
-							<!-- product -->
-						
-							<!-- /product -->
+							<div class="clearfix visible-sm visible-xs"></div>
+
 						</div>
 						<!-- /store products -->
 
@@ -299,7 +362,6 @@
 			<!-- /container -->
 		</div>
 		<!-- /NEWSLETTER -->
-
 
 <jsp:include page="/WEB-INF/views/include/footer.jsp" />
 

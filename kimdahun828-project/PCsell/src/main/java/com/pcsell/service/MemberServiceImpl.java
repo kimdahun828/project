@@ -1,23 +1,30 @@
 package com.pcsell.service;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
-import com.pcsell.dao.MemberDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+
+import com.pcsell.repository.MemberRepository;
 import com.pcsell.vo.Member;
 
+@Service("MemberService")
 public class MemberServiceImpl implements MemberService {
-	
-	private static final Logger logger = LoggerFactory.getLogger(MemberServiceImpl.class);
 
-	
+	private static final Logger logger = LoggerFactory.getLogger(MemberServiceImpl.class);
 	public static final String WRONG_PASSWD = "wrong_passwd";
 	
-	@Inject
-	MemberDao memberDao;
+	private MemberRepository memberRepository;
+	public MemberRepository getMemberRepository() {
+		return memberRepository;
+	}
+	public void setMemberRepository(MemberRepository memberRepository) {
+		this.memberRepository = memberRepository;
+	}
 
 	@Override
 	public void registerMember(Member member) {
@@ -38,7 +45,7 @@ public class MemberServiceImpl implements MemberService {
 	//회원 로그인 정보
 	@Override
 	public Member viewMember(Member vo) {
-		return memberDao.viewMember(vo);
+		return memberRepository.viewMember(vo); 
 	}
 	//회원 로그아웃
 	@Override
@@ -49,13 +56,18 @@ public class MemberServiceImpl implements MemberService {
 	// 회원 로그인 체크
 	@Override
 	public boolean loginCheck(Member vo, HttpSession session) {
-		boolean result = memberDao.loginCheck(vo);
+		boolean result = memberRepository.loginCheck(vo);
 		if (result) {
 			Member vo2 = viewMember(vo);
 			session.setAttribute("id", vo2.getId());
 		}
 		return result;
 	}
-	
+	@Override
+	public void insertMember(Member member) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 }

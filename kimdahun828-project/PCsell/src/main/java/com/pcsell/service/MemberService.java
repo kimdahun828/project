@@ -6,6 +6,8 @@ import com.pcsell.vo.Member;
 
 public interface MemberService {
 	
+	public void insertMember(Member member);
+	
 	void registerMember(Member member);
 	
 	Member findMemberByIdAndPasswd(String memberId, String passwd);

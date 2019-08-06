@@ -2,6 +2,9 @@ package com.pcsell.dao;
 
 import java.util.HashMap;
 
+import javax.inject.Inject;
+
+import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.pcsell.mapper.MemberMapper;
@@ -28,11 +31,14 @@ public class MemberDaoImpl implements MemberDao {
 	public void setMemberMapper(MemberMapper memberMapper) {
 		this.memberMapper = memberMapper;
 	}
+	
+	@Inject
+    private SqlSession session;
 
 	@Override
 	public void insertMember(Member member) {
 
-		memberMapper.insertMember(member);
+		session.insert("insertMember",member);
 		
 	}
 
@@ -59,5 +65,9 @@ public class MemberDaoImpl implements MemberDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
+ 
+    
 
 }

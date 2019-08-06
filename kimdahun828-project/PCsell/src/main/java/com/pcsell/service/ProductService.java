@@ -1,33 +1,30 @@
 package com.pcsell.service;
 
-import com.pcsell.dao.ProductDao;
+
+import java.util.HashMap;
+import java.util.List;
+
 import com.pcsell.vo.Photo;
 import com.pcsell.vo.Product;
 
-public class ProductService {
+public interface ProductService {
 
-	private ProductDao productDao;
 
-	public ProductDao getProductDao() {
-		return productDao;
-	}
+	List<Product> DramList();
 
-	public void setProductDao(ProductDao productDao) {
-		this.productDao = productDao;
-	}
+	List<Photo> dramFileListByPcCode(String pcCode);
+
+	List<Product> Dramdetail(String pcCode);
+
+	List<Photo> dramDetailFileListByPcCode(Product product);
+
+	String registerProduct(Product product);
 	
-	public String registerProduct(Product product) {
-		String newPcCode = productDao.insertProduct(product);
-		for (Photo file : product.getFiles()) {
-			file.setPcCode(newPcCode);
-			productDao.insertProductImage(file);
-		}
-		return newPcCode;
-	}
+	void registerUploadFile(Photo photo);
 
-	public void registerUploadFile(Photo photo) {
-		productDao.insertProductImage(photo);
-		
-	}
-	
+	List<Product> search(HashMap<String, Object> params);
+
+	List<Photo> searchFileListByPcCode(HashMap<String, Object> params);
+
 }
+ 
