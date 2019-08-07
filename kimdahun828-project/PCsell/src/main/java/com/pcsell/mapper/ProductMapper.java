@@ -48,6 +48,13 @@ public interface ProductMapper {
 
 	void deleteProduct(String pcCode);
 
-	Photo findProductImageByPcCode(String pcCode); // 최종 22개 class
+	Photo findProductImageByPcCode(String pcCode);
+	
+	int selectProductCount();
+	List<Product> selectProductWithPaging(HashMap<String, Object> params);
+
+	List<Product> searchProductByName(String search);
+	
+	// 최종 22개 class
 }
  

@@ -197,5 +197,26 @@ public class ProductRepositoryImpl implements ProductRepository {
 		
 		return vga;
 	}
+
+	@Override
+	public int selectProductCount() {
+		
+		return productMapper.selectProductCount();
+	}
+	@Override
+	public List<Product> selectProductWithPaging(HashMap<String, Object> params) {
+		
+		List<Product> products = 
+				productMapper.selectProductWithPaging(params);
+		
+		return products;
+	}
+	@Override
+	public List<Product> searchProductByName(String search) {
+
+		List<Product> searchProduct = productMapper.searchProductByName(search);
+		
+		return searchProduct;
+	}
 	
 }

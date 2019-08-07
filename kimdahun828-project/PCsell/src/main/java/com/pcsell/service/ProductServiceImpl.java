@@ -1,6 +1,7 @@
 package com.pcsell.service;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -185,5 +186,33 @@ public class ProductServiceImpl implements ProductService {
 		
 		return vga;
 	}
+
+	@Override
+	public int findProductCount() {
+		
+		int productsCount = productRepository.selectProductCount();
+		
+		return productsCount;
+	}
 	
+	@Override
+	public List<Product> findProductWithPaging(HashMap<String, Object> params) {
+		
+		List<Product> products = 
+				productRepository.selectProductWithPaging(params);
+		
+		return products;
+	}
+
+	@Override
+	public List<Product> searchProductByName(String search) {
+		
+		search = "%" + search + "%";
+		
+		List<Product> searchProduct = productRepository.searchProductByName(search);
+				
+				
+		return searchProduct;
+	}
+
 }

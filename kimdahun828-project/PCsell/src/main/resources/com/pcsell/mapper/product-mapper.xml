@@ -97,13 +97,13 @@
 	<select id="search" parameterType="hashmap" resultType="Product">
 		SELECT pcCode, name, price
 		FROM product
-		WHERE name like '%'||#{ name }||'%' and category = #{category}
+		WHERE UPPER(name) like '%'||UPPER(#{ name })||'%' and category = #{category}
 	</select>
 
 	<select id="searchFileListByPcCode" parameterType="hashmap" resultType="Photo">
 		SELECT pcCode, userFileName, savedFileName
 		FROM photo
-		WHERE pcCode in (SELECT pcCode FROM product WHERE category like #{ category } and name like '%'||#{ name }||'%')
+		WHERE pcCode in (SELECT pcCode FROM product WHERE category like #{ category } and UPPER(name) like '%'|| upper(#{ name }) ||'%')
 	</select>
 	
 	<select id="findMemoryList" parameterType="hashmap" resultType="Product">
@@ -213,4 +213,34 @@
 		WHERE pcCode = #{ pcCode }
 	</delete>
 	
+	<select id="selectProductWithPaging" parameterType="hashmap" resultType="Product">
+		SELECT s2.*
+		FROM
+		(
+			SELECT
+				rownum idx,
+				s.*
+			FROM
+			(
+				SELECT PCCODE, NAME, CATEGORY, PRICE
+				FROM PRODUCT
+				ORDER BY CATEGORY DESC	
+			) s
+		) s2
+		WHERE s2.idx >= #{ from } AND s2.idx <![CDATA[<]]> #{ to }
+	</select>
+	
+	<select id="selectProductCount" resultType="int">
+		SELECT count(*)
+		FROM PRODUCT
+	</select>
+
+	<select id="searchProductByName"
+			parameterType="String" resultType="Product">
+		SELECT PCCODE, NAME, CATEGORY, PRICE
+		FROM PRODUCT
+		WHERE UPPER(NAME) LIKE UPPER(#{ search })
+		ADN CATEGORY=${ category }
+	</select>
+
 </mapper>

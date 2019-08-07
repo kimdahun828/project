@@ -2,8 +2,9 @@ package com.pcsell.controller;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import java.util.Date;
 import java.util.HashMap;
-//github.com/kimdahun828/project.git
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -37,6 +38,16 @@ public class ProductController {
 			method=RequestMethod.GET)
 	public String productCategoryList(String category, Model model) {
 		
+		int pageSize = 9;
+		int currentPage = 1;
+		
+		int from = (currentPage - 1) * pageSize + 1;
+		int to = from + pageSize;
+		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("from", from);
+		params.put("to", to);
+		
 		List<Product> products = productService.findProductByCategory(category);
 		
 		for(Product product : products) {
@@ -46,7 +57,10 @@ public class ProductController {
 		
 		model.addAttribute("products", products);
 		
-		return "productList";
+		int productsCount = productService.findProductCount();
+		model.addAttribute("productsCount", productsCount);
+		
+		return "productCategoryList";
 	}
 	
 	@RequestMapping(
@@ -132,10 +146,10 @@ public class ProductController {
 		params.put("category", category);
 		
 		List<Product> search = productService.search(params);
-			
+		
 		for (Product product : search) {
-			List<Photo> files = productService.searchFileListByPcCode(params);
-			product.setFiles(files);
+			List<Photo> photo = productService.findProductImage(product.getPcCode());
+			product.setFiles(photo);
 		}
 
 		model.addAttribute("search", search);
@@ -257,4 +271,34 @@ public class ProductController {
 		
 		return "redirect:/productUpdate/" + pcCode;
 	}
+	
+	@RequestMapping(value = "/productSearch", method = RequestMethod.GET)
+	public String productSearch(String search, Model model, Product product) {
+		
+		int pageSize = 9;
+		int currentPage = 1;
+		
+		int from = (currentPage - 1) * pageSize + 1;
+		int to = from + pageSize;
+		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("from", from);
+		params.put("to", to);
+		
+		List<Product> searchProduct = productService.searchProductByName(search);
+		
+		for (Product product1 : searchProduct) {
+			List<Photo> photo = productService.findProductImage(product1.getPcCode());
+			product1.setFiles(photo);
+		}
+		
+		int productsCount = productService.findProductCount();
+		model.addAttribute("productsCount", productsCount);
+		
+		model.addAttribute("searchProduct", searchProduct);
+		model.addAttribute("search", search);
+		
+		return "/productSearchList";
+	}
+	
 }

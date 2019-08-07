@@ -90,13 +90,17 @@
 						<!-- SEARCH BAR -->
 						<div class="col-md-6">
 							<div class="header-search">
-								<form>
-									<select class="input-select">
-										<option value="0">All Categories</option>
-										<option value="1">Category 01</option>
-										<option value="1">Category 02</option>
+								<form action ="/PCsell/search?$value&$value1" method="get" enctype="multipart/form-data">
+									<select class="input-select" name="category">
+										<option value="CPU">CPU</option>
+										<option value="RAM">RAM</option>
+										<option value="HDD">HDD</option>
+										<option value="SSD">SSD</option>
+										<option value="Power">Power</option>
+										<option value="MainBoard">MainBoard</option>
+										<option value="VGA">VGA</option>
 									</select>
-									<input class="input" placeholder="Search here">
+									<input class="input" type="text" value1="textselect" name="name" placeholder="Search here">
 									<button class="search-btn">Search</button>
 								</form>
 							</div>

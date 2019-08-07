@@ -1,6 +1,5 @@
 package com.pcsell.service;
 
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -57,6 +56,12 @@ public interface ProductService {
 	public List<Product> findMainBoard();
 
 	public List<Product> findVGA();
+
+	public int findProductCount();
+
+	List<Product> findProductWithPaging(HashMap<String, Object> params);
+
+	public List<Product> searchProductByName(String search);
 	
 }
  

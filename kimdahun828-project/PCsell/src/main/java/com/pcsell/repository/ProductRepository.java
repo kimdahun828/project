@@ -56,4 +56,10 @@ public interface ProductRepository {
 
 	public List<Product> selectVGA();
 
+	public int selectProductCount();
+
+	public List<Product> selectProductWithPaging(HashMap<String, Object> params);
+
+	public List<Product> searchProductByName(String search);
+
 }

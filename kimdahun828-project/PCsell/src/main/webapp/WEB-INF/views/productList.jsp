@@ -99,15 +99,7 @@
 										<small></small>
 									</label>
 								</div>
-								
-								<div class="input-checkbox">
-									<input type="checkbox" id="category-8" name="Case">
-									<label for="category-8">
-										<span></span>
-										Case
-										<small></small>
-									</label>
-								</div>
+		
 							</div>
 						</div>
 						<!-- /aside Widget -->
@@ -191,38 +183,21 @@
 						<!-- aside Widget -->
 						<div class="aside">
 							<h3 class="aside-title">Top selling</h3>
+							<c:forEach var="product" items="${ products }" begin="0" end="2">
 							<div class="product-widget">
 								<div class="product-img">
-									<img src="/PCsell/resources/img/product01.png" alt="">
+									<c:if test="${ not empty product.files }">
+										<img src="/PCsell/resources/img/${ product.files[0].savedFileName }" alt="">
+									</c:if>
 								</div>
 								<div class="product-body">
-									<p class="product-category">Category</p>
-									<h3 class="product-name"><a href="#">product name goes here</a></h3>
-									<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+									<p class="product-category">${ product.category }</p>
+									<h3 class="product-name"><a href="detail/${ product.pcCode }">${ product.name }</a></h3>
+									<h4 class="product-price">${ product.price }원</h4>
 								</div>
 							</div>
+							</c:forEach>
 
-							<div class="product-widget">
-								<div class="product-img">
-									<img src="/PCsell/resources/img/product02.png" alt="">
-								</div>
-								<div class="product-body">
-									<p class="product-category">Category</p>
-									<h3 class="product-name"><a href="#">product name goes here</a></h3>
-									<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-								</div>
-							</div>
-
-							<div class="product-widget">
-								<div class="product-img">
-									<img src="/PCsell/resources/img/product03.png" alt="">
-								</div>
-								<div class="product-body">
-									<p class="product-category">Category</p>
-									<h3 class="product-name"><a href="#">product name goes here</a></h3>
-									<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-								</div>
-							</div>
 						</div>
 						<!-- /aside Widget -->
 					</div>
@@ -249,14 +224,21 @@
 									</select>
 								</label>
 							</div>
-							<ul class="store-grid">
-								<li><a href="${ path }/productWrite">상품등록</a></li>
-							</ul>
+							<c:choose>
+				            	<c:when test='${ id eq "manager" }'>
+									<ul class="store-grid">
+										<li><a href="${ path }/productWrite">상품등록</a></li>
+									</ul>
+								</c:when>
+								<c:otherwise>
+				         	 		<ul class="store-grid"></ul>
+				            	</c:otherwise>
+							</c:choose>
 						</div>
 						<!-- /store top filter -->
 
 						<!-- store products -->
-						<div class="row">
+						<div class="row" id="product-list">
 							<!-- product -->
 							<c:forEach var="product" items="${ products }">
 							<div class="col-md-4 col-xs-6">
@@ -271,11 +253,11 @@
 										</div>
 									</div>
 								<form action="/PCsell/cart/cartadd" method="POST">
-									<input type="hidden" name="pcCode" value="8F1EF5DC88884157E050C5D3F612164F">
+									<input type="hidden" name="pcCode" value="${ product.pcCode }">
 									<div class="product-body">
 										<p class="product-category">${ product.category }</p>
 										<h3 class="product-name"><a href="detail/${ product.pcCode }">${ product.name }</a></h3>
-										<h4 class="product-price">${ product.price }원 <del class="product-old-price">${ product.price }원</del></h4>
+										<h4 class="product-price">${ product.price }원</h4>
 										<div class="product-btns">
 											<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
 											<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
@@ -294,16 +276,22 @@
 						<!-- /store products -->
 
 						<!-- store bottom filter -->
-						<div class="store-filter clearfix">
+						<div class="store-filter clearfix">	
 							<span class="store-qty">Showing 20-100 products</span>
-							<ul class="store-pagination">
-								<li class="active">1</li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-								<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-							</ul>
-						</div>
+								<ul class="store-pagination"  id="pager">
+								<c:set var="pagerSize" value="3" />
+									<li><a id="first" data-pageno="-1" href="javascript:">처음</a></li>
+									<li><a id="prev" data-pageno="-1" href="javascript:"><i class="fa fa-angle-left"></i></a></li>
+									<c:forEach var="idx" begin="1" end="${ pagerSize }">
+										<li><a class="pageno" data-pageno="${ idx }" href="javascript:">${ idx }</a></li>
+										<c:if test="${ idx < pagerSize }">
+										&nbsp;
+										</c:if>
+									</c:forEach>
+									<li><a id="next" data-pageno="-1"  href="javascript:"><i class="fa fa-angle-right"></i></a></li>
+									<li><a id="last" data-pageno="-1" href="javascript:">끝</a></li>
+								</ul>
+							</div>
 						<!-- /store bottom filter -->
 					</div>
 					<!-- /STORE -->
@@ -356,48 +344,133 @@
 
 	</body>
 	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	<script type="text/javascript">
+	$(function() {
+		var currentPage = 1;
+    	var pagerSize = 3;
+    	var pageSize = 9;
+    	var lastPage = ( Math.floor(${ productsCount } / pageSize ) + 1 );
+		
+    	function loadProducts() {
+   			$("#product-list").load('/PCsell/product-list', 
+									{ "pageNo": currentPage }, 
+									function() {});
+    	}
+    	
+    	$('#pager #first').on('click', function(event) {
+    		if (currentPage == 1) {
+    			return;
+    		}
+    		
+    		currentPage = 1;
+    		$('#pager .pageno').each(function(idx, item) {
+    			$(this).attr('data-pageno', idx + 1);
+    			$(this).text( (idx + 1));
+    		});
+    		
+    		loadProducts();
+    	});
+    	
+    	$('#pager #prev').on('click', function(event) {
+    		if (currentPage == 1) {
+    			return;
+    		}
+    		
+    		var pageNo = $('#pager .pageno:first').attr("data-pageno");
+    		if (currentPage == pageNo) {
+    			if (pageNo <= pagerSize) {
+    				var i = 1;
+    				$('#pager .pageno').each(function(idx, item) {    					
+    					$(this).attr('data-pageno', i);
+		    			$(this).text( i );
+		    			i++;
+    				});
+    			} else {
+	    			$('#pager .pageno').each(function(idx, item) {
+		    			$(this).attr('data-pageno', currentPage - (pagerSize - idx));
+		    			$(this).text( (currentPage - (pagerSize - idx) ));
+		    		});
+	    		}
+    		} 
+    		
+    		currentPage--;	
+    		
+    		loadProducts();
+    	});
+    	
+    	$('#pager .pageno').on('click', function(event) {
+    		var pageNo = $(this).attr('data-pageno');
+    		if (pageNo == currentPage) {
+    			return;
+    		}
+    		
+    		$(this).text(pageNo);
+    		var tmp = $("#pager a[data-pageno=" + currentPage + "]");
+    		tmp.text(tmp.attr('data-pageno'));
+    		currentPage = parseInt(pageNo);
+    		
+    		loadProducts();
+    	});
+    	
+    	$('#pager #last').on('click', function(event) {
+    		if (currentPage == lastPage) {
+    			return;
+    		}
+    		
+    		currentPage = lastPage;
+    		$('#pager .pageno').each(function(idx, item) {
+    			$(this).attr('data-pageno', lastPage - (pagerSize - idx) + 1);
+    			$(this).text( (lastPage - (pagerSize - idx) + 1 ));
+    		});
+    		
+    		loadProducts();
+    	});
+    	
+    	$('#pager #next').on('click', function(event) {
+    		if (currentPage == lastPage) {
+    			return;
+    		}
+    		var pageNo = $('#pager .pageno:last').attr("data-pageno");
+    		if (currentPage == pageNo) {
+    			if (lastPage - pageNo < 3) {
+    				 var i = lastPage - 2;
+    				$('#pager .pageno').each(function(idx, item) {    					
+    					$(this).attr('data-pageno', i);
+		    			$(this).text( i );
+						i++
+    				});
+    			} else {
+   				 	 $('#pager .pageno').each(function(idx, item) {
+   	    			  	$(this).attr('data-pageno', (currentPage + idx + 1));
+   	    			  	$(this).text((currentPage + idx + 1));
+	    		  	  });
+    			  }
+    		}
+   		currentPage++;
+   		
+   		loadProducts();
+    	});
+    	
+	});
+	
 	$(document).ready(function(){
-	    $("input[name=CPU]").change(function(){
+		$('input[type="checkbox"]').change(function(){
 	        if($("input[name=CPU]").is(":checked")){
 	        	location.href = "productCategoryList?category=CPU";
-	        	$("#category").text("CPU");
-	        	$("#category").attr("productCategoryList?category=CPU");
-	        }
-	    });
-	    $("input[name=MainBoard]").change(function(){
-	        if($("input[name=MainBoard]").is(":checked")){
+	        } else if ($("input[name=MainBoard]").is(":checked")){
 	        	location.href = "productCategoryList?category=MainBoard";
-	        }
-	    });
-	    $("input[name=RAM]").change(function(){
-	        if($("input[name=RAM]").is(":checked")){
+	        } else if ($("input[name=RAM]").is(":checked")){
 	        	location.href = "productCategoryList?category=RAM";
-	        }
-	    });
-	    $("input[name=VGA]").change(function(){
-	        if($("input[name=VGA]").is(":checked")){
+	        } else if ($("input[name=VGA]").is(":checked")){
 	        	location.href = "productCategoryList?category=VGA";
-	        }
-	    });
-	    $("input[name=SSD]").change(function(){
-	        if($("input[name=SSD]").is(":checked")){
+	        } else if ($("input[name=SSD]").is(":checked")){
 	        	location.href = "productCategoryList?category=SSD";
-	        }
-	    });
-	    $("input[name=HDD]").change(function(){
-	        if($("input[name=HDD]").is(":checked")){
+	        } else if ($("input[name=HDD]").is(":checked")){
 	        	location.href = "productCategoryList?category=HDD";
-	        }
-	    });
-	    $("input[name=Power]").change(function(){
-	        if($("input[name=Power]").is(":checked")){
+	        } else if ($("input[name=Power]").is(":checked")){
 	        	location.href = "productCategoryList?category=Power";
-	        }
-	    });
-	    $("input[name=Case]").change(function(){
-	        if($("input[name=Case]").is(":checked")){
-	        	location.href = "productCategoryList?category=Case";
 	        }
 	    });
 	});

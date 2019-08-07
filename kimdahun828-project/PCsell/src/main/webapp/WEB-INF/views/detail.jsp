@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${ pageContext.request.contextPath }"/>
 
-<jsp:include page="/WEB-INF/views/include/header.jsp" />
+<jsp:include page="include/header.jsp" />
 
 		<!-- BREADCRUMB -->
 		<div id="breadcrumb" class="section">
@@ -39,17 +39,6 @@
 								<img src="/PCsell/resources/img/${ photo.savedFileName }">
 							</div>
 							</c:forEach>
-							<div class="product-preview">
-								<img src="/PCsell/resources/img/product03.png" alt="">
-							</div>
-
-							<div class="product-preview">
-								<img src="/PCsell/resources/img/product06.png" alt="">
-							</div>
-
-							<div class="product-preview">
-								<img src="/PCsell/resources/img/product08.png" alt="">
-							</div>
 						</div>
 					</div>
 					<!-- /Product main img -->
@@ -57,21 +46,11 @@
 					<!-- Product thumb imgs -->
 					<div class="col-md-2  col-md-pull-5">
 						<div id="product-imgs">
+							<c:forEach var="photo" items="${ product.files }">
 							<div class="product-preview">
-								<img src="/PCsell/resources/img/product01.png" alt="">
+								<img src="/PCsell/resources/img/${ photo.savedFileName }" alt="">
 							</div>
-
-							<div class="product-preview">
-								<img src="/PCsell/resources/img/product03.png" alt="">
-							</div>
-
-							<div class="product-preview">
-								<img src="/PCsell/resources/img/product06.png" alt="">
-							</div>
-
-							<div class="product-preview">
-								<img src="/PCsell/resources/img/product08.png" alt="">
-							</div>
+							</c:forEach>
 						</div>
 					</div>
 					<!-- /Product thumb imgs -->
@@ -91,14 +70,14 @@
 								<a class="review-link" href="#">10 Review(s) | Add your review</a>
 							</div>
 							<div>
-								<h3 class="product-price">${ product.price }원 <del class="product-old-price">${ product.price }원</del></h3>
+								<h3 class="product-price">${ product.price }원</h3>
 								<span class="product-available">In Stock</span>
 							</div>
 							<div class="add-to-cart">
 								<div class="qty-label">
 									Qty
 									<div class="input-number">
-										<input type="number">
+										<input type="number" value="1">
 										<span class="qty-up">+</span>
 										<span class="qty-down">-</span>
 									</div>
@@ -126,12 +105,18 @@
 							</ul>
 						</div>		
 					</div>
-						<ul class="store-grid">
-							<li><a href="${ path }/productUpdate/${ product.pcCode }">내용수정</a></li>
-						</ul>
-						<ul class="store-grid">
-							<li><a href="${ path }/productDelete/${ product.pcCode }">상품삭제</a></li>
-						</ul>
+						<c:choose>
+				            <c:when test='${ id eq "manager" }'>
+								<ul class="store-grid">
+									<li><a href="${ path }/productUpdate/${ product.pcCode }">내용수정</a></li>
+								</ul>
+								<ul class="store-grid">
+									<li><a href="${ path }/productDelete/${ product.pcCode }">상품삭제</a></li>
+								</ul>
+							</c:when>
+							<c:otherwise>
+							</c:otherwise>
+						</c:choose>
 					<!-- /Product details -->
 
 					<!-- Product tab -->
@@ -161,7 +146,7 @@
 								<div id="tab2" class="tab-pane fade in">
 									<div class="row">
 										<div class="col-md-12">
-											<table border="1">
+											<table border="1" style="padding: 20px;" align="center">
 												<tr>
 													<td><p>제품명</p></td>
 													<td>${ product.name }</td>
@@ -470,24 +455,22 @@
 					</div>
 
 					<!-- product -->
+					<c:forEach var="products" items="${ products }" begin="0" end="3">
 					<div class="col-md-3 col-xs-6">
 						<div class="product">
 							<div class="product-img">
-								<img src="/PCsell/resources/img/product01.png" alt="">
+								<c:if test="${not empty products.files}">
+									<img src="/PCsell/resources/img/${ products.files[0].savedFileName }" alt="">
+								</c:if>
 								<div class="product-label">
 									<span class="sale">-30%</span>
 								</div>
 							</div>
 							<div class="product-body">
-								<p class="product-category">Category</p>
-								<h3 class="product-name"><a href="#">product name goes here</a></h3>
-								<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+								<p class="product-category">${ products.category }</p>
+								<h3 class="product-name"><a href="detail/${ products.pcCode }">${ products.name }</a></h3>
+								<h4 class="product-price">${ products.price }</h4>
 								<div class="product-rating">
-								</div>
-								<div class="product-btns">
-									<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-									<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-									<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
 								</div>
 							</div>
 							<div class="add-to-cart">
@@ -495,98 +478,8 @@
 							</div>
 						</div>
 					</div>
+					</c:forEach>
 					<!-- /product -->
-
-					<!-- product -->
-					<div class="col-md-3 col-xs-6">
-						<div class="product">
-							<div class="product-img">
-								<img src="/PCsell/resources/img/product02.png" alt="">
-								<div class="product-label">
-									<span class="new">NEW</span>
-								</div>
-							</div>
-							<div class="product-body">
-								<p class="product-category">Category</p>
-								<h3 class="product-name"><a href="#">product name goes here</a></h3>
-								<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-								<div class="product-rating">
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-								</div>
-								<div class="product-btns">
-									<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-									<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-									<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-								</div>
-							</div>
-							<div class="add-to-cart">
-								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-							</div>
-						</div>
-					</div>
-					<!-- /product -->
-
-					<div class="clearfix visible-sm visible-xs"></div>
-
-					<!-- product -->
-					<div class="col-md-3 col-xs-6">
-						<div class="product">
-							<div class="product-img">
-								<img src="/PCsell/resources/img/product03.png" alt="">
-							</div>
-							<div class="product-body">
-								<p class="product-category">Category</p>
-								<h3 class="product-name"><a href="#">product name goes here</a></h3>
-								<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-								<div class="product-rating">
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star-o"></i>
-								</div>
-								<div class="product-btns">
-									<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-									<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-									<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-								</div>
-							</div>
-							<div class="add-to-cart">
-								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-							</div>
-						</div>
-					</div>
-					<!-- /product -->
-
-					<!-- product -->
-					<div class="col-md-3 col-xs-6">
-						<div class="product">
-							<div class="product-img">
-								<img src="/PCsell/resources/img/product04.png" alt="">
-							</div>
-							<div class="product-body">
-								<p class="product-category">Category</p>
-								<h3 class="product-name"><a href="#">product name goes here</a></h3>
-								<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-								<div class="product-rating">
-								</div>
-								<div class="product-btns">
-									<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-									<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-									<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-								</div>
-							</div>
-							<div class="add-to-cart">
-								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-							</div>
-						</div>
-					</div>
-					<!-- /product -->
-
 				</div>
 				<!-- /row -->
 			</div>
