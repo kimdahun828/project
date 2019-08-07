@@ -76,7 +76,7 @@
 							<input type="email" class="form-control" name="email" id="email">
 						</div>
 						
-						<!-- 이메일 -->
+						<!-- hp -->
 						<div class="form-group">
 							<label for="hp">hp</label>
 							<input type="hp" class="form-control" name="hp" id="hp">

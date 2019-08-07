@@ -31,7 +31,6 @@
 				<!-- row -->
 				<div class="row">
 					<!-- Order Details -->
-					<form action="/PCsell/cart/checkout" method="POST">
 					<div class="col-md-5 order-details">
 						<div class="section-title text-center">
 							<h3 class="title">Your Order</h3>
@@ -41,27 +40,21 @@
 								<div><strong>PRODUCT</strong></div>
 								<div><strong>TOTAL</strong></div>
 							</div>
-							<c:forEach var="checkList" items="${ checkList }">
 							<div class="order-products">
 								<div class="order-col">
-								<input type="hidden" name="name" value="${checkList.name}">
-								<input type="hidden" name="price" value="${checkList.price}">
-								<input type="hidden" name="pcCode" value="${checkList.pcCode}">
-									<div>${checkList.name}</div>
-									<div>${checkList.price}원</div>
+									<div></div>
+									<div></div>
 								</div>
 							</div>
-							</c:forEach>
 							<div class="order-col">
 								<div>Shiping</div>
 								<div><strong>FREE</strong></div>
 							</div>
 							
 							<div class="order-col">
-							<c:forEach var="cartSum" items="${cartSum }">
 								<div><strong>TOTAL</strong></div>
-								<div><strong class="order-total">${cartSum.sum}원</strong></div>
-							</c:forEach>
+								<div><strong class="order-total">원</strong></div>
+
 							</div>
 						</div>
 						<div class="payment-method">
@@ -102,13 +95,9 @@
 								<span></span>
 								I've read and accept the <a href="#">terms & conditions</a>
 							</label>
-							<button type="submit" class="add-to-cart-btn">Checkout</button>
 						</div>
-						</form>
+
 						<div class="input-checkbox">
-							<form action="/PCsell/cart/delete" method="POST" >
-							<button type="submit" class="add-to-cart-btn">DELETE</button>
-							</form>
 						</div>
 					</div>
 				</div>

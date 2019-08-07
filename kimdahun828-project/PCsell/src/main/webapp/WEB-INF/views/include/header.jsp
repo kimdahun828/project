@@ -77,13 +77,13 @@
 						<!-- SEARCH BAR -->
 						<div class="col-md-6">
 							<div class="header-search">
-								<form action ="search?$value&$value1" method="get" enctype="multipart/form-data">
+								<form action ="/PCsell/search?$value&$value1" method="get" enctype="multipart/form-data">
 									<select class="input-select" name="category">
 										<option value="CPU">CPU</option>
 										<option value="RAM">RAM</option>
 										<option value="HDD">HDD</option>
 										<option value="SSD">SSD</option>
-										<option value="Power">power</option>
+										<option value="Power">Power</option>
 										<option value="MainBoard">MainBoard</option>
 										<option value="VGA">VGA</option>
 									</select>
@@ -182,7 +182,7 @@
 						<li><a href="#">Hot Deals</a></li>
 						<li><a href="/PCsell/productList">Categories</a></li>
 						<li><a href="#">Laptops</a></li>
-						<li><a href="/PCsell/memory">Accessories</a></li>
+						<li><a href="/PCsell/memorylist">Memories</a></li>
 					</ul>
 					<!-- /NAV -->
 				</div>

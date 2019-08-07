@@ -185,14 +185,23 @@
 								<label>
 									Show:
 									<select class="input-select">
-										<option value="0">20</option>
-										<option value="1">50</option>
+										<option value="0">2</option>
+										<option value="1">5</option>
 									</select>
 								</label>
-							</div>
-							<ul class="store-grid">
-								<li><a href="${ path }/productWrite">상품등록</a></li>
-							</ul>
+							</div>							
+					 <c:choose>
+			            <c:when test='${ id eq "manager" }'><!-- 매니저 일 경우에만 상품 등록 가능함. -->
+					       		<ul class="store-grid">
+									<li><a href="${ path }/productWrite">상품등록</a></li>
+								</ul>
+			            </c:when>
+			            <c:otherwise>
+			         	  <ul class="store-grid"></ul>
+			            </c:otherwise>
+		       		 </c:choose>
+							
+							
 						</div>
 						<!-- /store top filter -->
 
@@ -202,13 +211,25 @@
 							<c:forEach var="product" items="${ product }">
 							<div class="col-md-4 col-xs-6">								
 								<div class="product">
-								<c:if test="${ not empty product.files }">
-									<div class="product-img">
-										<img src="/PCsell/resources/img/${product.files[0].savedFileName }" alt="">
-										<div class="product-label"><span class="new">NEW</span></div>
-									</div>									
-								</c:if>
-									<form action="/PCsell/cart/cartadd" method="POST">
+									<c:if test="${ not empty product.files }">
+										<div class="product-img">
+	
+											<c:choose>
+									            <c:when test='${ product.pcCode eq "8F1F89C375DC2D78E050C5D3F6121E25" }'>
+													<img src="/PCsell/resources/img/${product.files[0].savedFileName }" alt="">
+													<div class="product-label"><span class="new">NEW</span></div>
+									            </c:when>
+									            <c:when test='${ product.pcCode eq "8F1F89C375DB2D78E050C5D3F6121E25" }'>
+													<img src="/PCsell/resources/img/${product.files[0].savedFileName }" alt="">
+													<div class="product-label"><span class="new">NEW</span></div>
+									            </c:when>
+									            <c:otherwise>
+									         	 	 <img src="/PCsell/resources/img/${product.files[0].savedFileName }" alt="">
+									            </c:otherwise>
+								       		 </c:choose>
+										</div>									
+									</c:if>
+								<form action="/PCsell/cart/cartadd" method="POST">
 									<input type="hidden" name="pcCode" value="${product.pcCode }">
 									<div class="product-body">
 										<p class="product-category">Category</p>
@@ -242,16 +263,25 @@
 							<!-- /product -->
 						</div>
 						<!-- /store products -->
-
+						
 						<!-- store bottom filter -->
 						<div class="store-filter clearfix">
-							<span class="store-qty">Showing 20-100 products</span>
 							<ul class="store-pagination">
-								<li class="active">1</li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-								<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+									<c:if test="${pagination.prev}">
+										<li><a class="active" href="#"
+											onClick="fn_prev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}', '${ param.type }')">이전</a></li>
+									</c:if>
+									<c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="idx">
+										<li <c:out value="${pagination.page == idx ? 'active' : ''}"/> ">
+											<a  href="#" onClick="fn_pagination('${idx}', '${pagination.range}', '${pagination.rangeSize}', '${ param.type }')">${idx}</a>
+										</li>
+									</c:forEach>
+									
+									<c:if test="${pagination.next}">
+										<li>
+											<a href="#" onClick="fn_next('${pagination.range}','${pagination.range}', '${pagination.rangeSize}', '${ param.type }')">다음</a>
+										</li>
+									</c:if>	
 							</ul>
 						</div>
 						<!-- /store bottom filter -->
@@ -300,6 +330,65 @@
 		</div>
 		<!-- /NEWSLETTER -->
 
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	
+	<script type="text/javascript">              
+      $(function(){
+                  
+         $('#type_form').on('change', function(event){
+            
+            this.form.submit();
+            
+         });
+      });
+ 
+   
+		//이전 버튼 이벤트
+		function fn_prev(page, range, rangeSize , type) {
+
+			var page = ((range - 2) * rangeSize) + 1;
+			var range = range - 1;
+			var url = "${pageContext.request.contextPath}/memorylist";
+
+			url = url + "?page=" + page;
+			url = url + "&range=" + range; 
+			url = url + "&type=" + type ;
+
+			location.href = url;
+
+		}
+
+		//페이지 번호 클릭
+		function fn_pagination(page, range, rangeSize, type) {
+
+			var url = "${pageContext.request.contextPath}/memorylist";
+
+			url = url + "?page=" + page;
+			url = url + "&range=" + range;
+			url = url + "&type=" + type ;
+
+			location.href = url;
+
+		}
+
+		//다음 버튼 이벤트
+		function fn_next(page, range, rangeSize, type) {
+
+			var page = parseInt((range * rangeSize)) + 1;
+
+			var range = parseInt(range) + 1;
+
+			var url = "${pageContext.request.contextPath}/memorylist";
+
+			url = url + "?page=" + page;
+			url = url + "&range=" + range;
+			url = url + "&type=" + type ;
+
+			location.href = url;
+		}
+	</script>
 
 <jsp:include page="/WEB-INF/views/include/footer.jsp" />
 

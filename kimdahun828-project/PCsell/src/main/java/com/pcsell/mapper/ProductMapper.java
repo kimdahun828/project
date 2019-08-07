@@ -21,5 +21,9 @@ public interface ProductMapper {
 	List<Product> search(HashMap<String, Object> params);
 
 	List<Photo> searchFileListByPcCode(HashMap<String, Object> params);
+
+	int findMemoryListCnt(HashMap<String, Object> param);
+
+	List<Product> findMemoryList(HashMap<String, Object> params);
 }
  

@@ -57,15 +57,18 @@ public class CartRepositoryImpl implements CartRepository {
 		List<Cart> checkOut = cartMapper.checkOut(params); 
 		return (ArrayList<Cart>)checkOut;
 	}
+	
 	@Override
 	public ArrayList<Cart> findCheckList(String name) {
 		List<Cart> checkList = cartMapper.findCheckList(name); 
 		return (ArrayList<Cart>)checkList;
 	}
+	
 	@Override
 	public void cartDelete(HashMap<String, Object> params) {
 		cartMapper.cartDelete(params); 
 	}
+	
 	@Override
 	public ArrayList<Cart> cartSum(HashMap<String, Object> params) {
 		List<Cart> cartSum = cartMapper.cartSum(params); 

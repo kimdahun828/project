@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.pcsell.common.Pagination;
 import com.pcsell.vo.Photo;
 import com.pcsell.vo.Product;
 
@@ -24,6 +25,10 @@ public interface ProductRepository {
 	public ArrayList<Product> search(HashMap<String, Object> params);
 
 	public ArrayList<Photo> searchFileListByPcCode(HashMap<String, Object> params);
+
+	public List<Product> findMemoryList(Pagination pagination, String category);
+
+	public int findMemoryListCnt(String category);
 	
 }
 

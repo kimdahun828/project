@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,9 +24,9 @@ public class ConnectController {
 		return "productList";
 	}
 	
-	@RequestMapping(value = "/detail", method = RequestMethod.GET)
-	public String detail(Locale locale, Model model) {
-
+	@RequestMapping(value = "/detail/{pcCode}", method = RequestMethod.GET)
+	public String detail(@PathVariable String pcCode, Locale locale, Model model) {
+		
 		return "detail";
 	}
 	

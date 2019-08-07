@@ -250,10 +250,16 @@
 									</select>
 								</label>
 							</div>
-							<ul class="store-grid">
-								<li><a href="${ path }/productWrite">상품등록</a></li>
-								
-							</ul>
+					  <c:choose>
+				            <c:when test='${ id eq "manager" }'>
+						       		<ul class="store-grid">
+										<li><a href="${ path }/productWrite">상품등록</a></li>
+									</ul>
+				            </c:when>
+				            <c:otherwise>
+				         	 	 <ul class="store-grid"></ul>
+				            </c:otherwise>
+		       		 </c:choose>
 						</div>
 						<!-- /store top filter -->
 
@@ -267,8 +273,6 @@
 									<div class="product-img">
 										<img src="/PCsell/resources/img/${search.files[0].savedFileName }" alt="">
 										<div class="product-label">
-											<span class="sale">-30%</span>
-											<span class="new">NEW</span>
 										</div>
 									</div>
 								</c:if>

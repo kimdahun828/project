@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.pcsell.common.Pagination;
 import com.pcsell.repository.ProductRepository;
 import com.pcsell.vo.Photo;
 import com.pcsell.vo.Product;
@@ -69,5 +70,18 @@ public class ProductServiceImpl implements ProductService {
 		ArrayList<Photo> searchFileListByPcCode = productRepository.searchFileListByPcCode(params);
 		return searchFileListByPcCode;
 
+	}
+
+	@Override
+	public int findMemoryListCnt(String category) {
+		int memoryCnt = productRepository.findMemoryListCnt(category);
+		return memoryCnt;
+	}
+
+	@Override
+	public List<Product> findMemoryList(Pagination pagination, String category) {
+		List<Product> products = productRepository.findMemoryList(pagination, category);
+		
+		return products;
 	}
 }

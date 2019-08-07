@@ -269,7 +269,7 @@
 											<span class="new">NEW</span>
 										</div>
 									</div>
-									<form action="/PCsell/cart/cartadd" method="POST">
+								<form action="/PCsell/cart/cartadd" method="POST">
 									<input type="hidden" name="pcCode" value="8F1EF5DC88884157E050C5D3F612164F">
 									<div class="product-body">
 										<p class="product-category">Category</p>

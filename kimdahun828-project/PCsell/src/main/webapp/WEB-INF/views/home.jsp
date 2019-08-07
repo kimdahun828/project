@@ -46,7 +46,7 @@
 							</div>
 							<div class="shop-body">
 								<h3>Memory<br>Collection</h3>
-								<a href="memory" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+								<a href="memorylist" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
 					</div>

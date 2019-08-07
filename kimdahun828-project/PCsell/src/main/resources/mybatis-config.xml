@@ -28,6 +28,7 @@
 	<!-- SQL + Object Mapping Configuration -->
 	<mappers>
 		<mapper resource="com/pcsell/mapper/product-mapper.xml" />
+		<mapper resource="com/pcsell/mapper/member-mapper.xml" />
 		<mapper resource="com/pcsell/mapper/board-mapper.xml" />
 		<mapper resource="com/pcsell/mapper/cart-mapper.xml" />
 	</mappers>

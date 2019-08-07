@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.pcsell.common.Pagination;
 import com.pcsell.service.ProductService;
 import com.pcsell.util.Util;
 import com.pcsell.vo.Photo;
@@ -44,7 +45,7 @@ public class ProductController {
 			String path = application.getRealPath("/upload-files");
 			
 			String userFileName =  mf.getOriginalFilename();
-			if (userFileName.contains("\\")) { // iexplore 寃쎌슦 
+			if (userFileName.contains("\\")) { // iexplore 寃쎌슦
 				//C:\AAA\BBB\CCC.png -> CCC.png 
 				userFileName = userFileName.substring(userFileName.lastIndexOf("\\") + 1);
 			}
@@ -68,23 +69,24 @@ public class ProductController {
 			}			
 		}
 	
-		return "redirect:/productList"; 
+		return "redirect:/productList";
 	}
 	
 	
-	@RequestMapping(value = "/memory", method = RequestMethod.GET)
-	public String memoryList(Locale locale, Model model) {
+//	@RequestMapping(value = "/memory", method = RequestMethod.GET)
+//	public String memoryList(Locale locale, Model model) {
 		
-		List<Product> products = productService.DramList();		
-		for (Product product : products) {
-			List<Photo> files = productService.dramFileListByPcCode(product.getPcCode());
-			product.setFiles(files);
-		}
+//		List<Product> products = productService.DramList();		
+//		for (Product product : products) {
+//			List<Photo> files = productService.dramFileListByPcCode(product.getPcCode());
+//			product.setFiles(files);
+//		}
 		
-		model.addAttribute("product", products);
+//		model.addAttribute("product", products);
 		
-		return "memory";
-	}	
+		
+//		return "memory";
+//	}	
 	
 	@RequestMapping(value = "/dram/{pcCode}", method = RequestMethod.GET)
 	public String dramDetail(@PathVariable String pcCode, Model model) { //Dram Detail
@@ -116,6 +118,41 @@ public class ProductController {
 
 		model.addAttribute("search", search);
 		return "searchproductList"; 
+	}
+	
+	@RequestMapping(value = "/memorylist", method = RequestMethod.GET)
+	public String list(Model model, @RequestParam(required = false, defaultValue = "1") int page
+						, @RequestParam(required = false, defaultValue = "1") int range){
+		try {
+			String category = "RAM";
+		
+			// 전체 게시글 개수 
+			int listCnt = productService.findMemoryListCnt(category);
+
+			// Pagination 객체생성
+			Pagination pagination = new Pagination();
+			pagination.pageInfo(page, range, listCnt);
+
+			model.addAttribute("pagination", pagination);
+
+			
+	        // 전체리스트
+			List<Product> products = productService.findMemoryList(pagination,category);
+			if(products ==null) {
+				return "redirect:/";
+			}
+			
+			for (Product product : products) {
+				List<Photo> files = productService.dramFileListByPcCode(product.getPcCode());
+				product.setFiles(files);
+			}
+			
+			model.addAttribute("product", products);
+			model.addAttribute("listCnt", listCnt);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return "memory";
 	}
 	
 }

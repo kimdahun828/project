@@ -5,13 +5,16 @@
 
 <mapper namespace="com.pcsell.mapper.ProductMapper">
 
+     <sql id="productListColumns">
+			PCCODE, NAME, DIVISION, COMPANYNAME, GENERATION, CORE, THREAD, CAPACITY, CLOCK, CHIPSET, SOCKET, INTERFACE, BUFFER, TYPE, OUTPUT, PRICE, COUNT, CATEGORY
+	</sql>
 
 	<insert id="insertProduct"
 			parameterType="Product"
 			useGeneratedKeys="true"
 			keyColumn="pcCode"
 			keyProperty="pcCode">
-				INSERT INTO PRODUCT (
+		INSERT INTO PRODUCT (
 			PCCODE
 			, NAME
 			, DIVISION
@@ -53,6 +56,7 @@
 		)
 	</insert>
 
+
 	<insert id="insertProductImage" parameterType="Photo">
 		INSERT INTO PHOTO (
 			PCCODE
@@ -69,7 +73,7 @@
 	<select id="dramList" resultType="Product">
 		SELECT pcCode, name, price
 		FROM product
-		WHERE category = 'RAM'	
+		WHERE category = 'RAM'
 	</select>
 	
 	<select id="dramFileList" parameterType="String" resultType="Photo">
@@ -100,6 +104,21 @@
 		SELECT pcCode, userFileName, savedFileName
 		FROM photo
 		WHERE pcCode in (SELECT pcCode FROM product WHERE category like #{ category } and name like '%'||#{ name }||'%')
+	</select>
+	
+	<select id="findMemoryList" parameterType="hashmap" resultType="Product">
+		SELECT * from 
+			(SELECT pcCode, name, price, rownum as rnum
+			FROM product
+			WHERE category like '%'||#{ category }||'%'
+			ORDER by pcCode desc)
+        WHERE rnum between #{ startList } and #{ endList }
+     </select>
+     
+     <select id="findMemoryListCnt" parameterType="hashmap" resultType="int">
+		SELECT count(*) as listCnt
+		FROM product
+		where category like '%'||#{ category }||'%'
 	</select>
 
 </mapper>

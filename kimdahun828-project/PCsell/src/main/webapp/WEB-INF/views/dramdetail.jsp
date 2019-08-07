@@ -12,10 +12,9 @@
 				<div class="row">
 					<div class="col-md-12">
 						<ul class="breadcrumb-tree">
-							<li><a href="#">Home</a></li>
+							<li><a href="/PCsell">Home</a></li>
 							<li><a href="#">All Categories</a></li>
-							<li><a href="#">Accessories</a></li>
-							<li><a href="#">Headphones</a></li>
+							<li><a href="/PCsell/memorylist">Memories</a></li>
 							<li class="active">Product name goes here</li>
 						</ul>
 					</div>
@@ -33,10 +32,11 @@
 				<!-- row -->
 				<div class="row">
 					<!-- Product main img -->
+					<c:forEach var="dramdetail" items="${ dramdetail }">
 					<div class="col-md-5 col-md-push-2">
 						<div id="product-main-img">
 							<div class="product-preview">
-								<img src="/PCsell/resources/img/32GB DDR4.jpg" alt="">
+								<img src="/PCsell/resources/img/${dramdetail.files[0].savedFileName }" alt="">
 							</div>
 
 							<div class="product-preview">
@@ -58,7 +58,7 @@
 					<div class="col-md-2  col-md-pull-5">
 						<div id="product-imgs">
 							<div class="product-preview">
-								<img src="/PCsell/resources/img/32GB DDR4.jpg" alt="">
+								<img src="/PCsell/resources/img/${dramdetail.files[0].savedFileName }" alt="">
 							</div>
 
 							<div class="product-preview">
@@ -80,7 +80,6 @@
 					<div class="col-md-5">
 						<form action="/PCsell/cart/cartadd2" method="POST">
 						<div class="product-details">
-						<c:forEach var="dramdetail" items="${ dramdetail }">
 						<input type="hidden" name="pcCode" value="${dramdetail.pcCode }">
 							<h2 class="product-name">${dramdetail.name }</h2>
 							<div>
@@ -97,7 +96,6 @@
 								<h3 class="product-price">${dramdetail.price }원</h3>
 								<span class="product-available">In Stock</span>
 							</div>
-							</c:forEach>
 							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 
 							<div class="product-options">
@@ -120,7 +118,7 @@
 								<div class="qty-label">
 									Qty
 									<div class="input-number">
-										<input type="number">
+										<input type="number" placeholder="1">
 										<span class="qty-up">+</span>
 										<span class="qty-down">-</span>
 									</div>
@@ -147,7 +145,8 @@
 								<li><a href="#"><i class="fa fa-envelope"></i></a></li>
 							</ul>
 						</div>
-						</form>
+					</form>
+					</c:forEach>
 					</div>
 					<!-- /Product details -->
 

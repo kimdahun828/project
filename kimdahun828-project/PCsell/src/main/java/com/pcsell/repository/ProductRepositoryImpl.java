@@ -7,6 +7,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.pcsell.common.Pagination;
 import com.pcsell.mapper.ProductMapper;
 import com.pcsell.vo.Photo;
 import com.pcsell.vo.Product;
@@ -81,6 +82,23 @@ public class ProductRepositoryImpl implements ProductRepository {
 	public ArrayList<Photo> searchFileListByPcCode(HashMap<String, Object> params) {
 		List<Photo> searchFileListByPcCode = productMapper.searchFileListByPcCode(params);
 		return (ArrayList<Photo>)searchFileListByPcCode;
+	}
+	@Override
+	public List<Product> findMemoryList(Pagination pagination, String category) {
+		HashMap<String,Object> params = new HashMap<String, Object>();
+		params.put("category", category);
+		params.put("startList", pagination.getStartList());
+		params.put("endList", pagination.getEndList());
+		
+		List<Product> products = productMapper.findMemoryList(params);
+		return products;
+	}
+	@Override
+	public int findMemoryListCnt(String category) {
+		HashMap<String,Object> param = new HashMap<String, Object>();
+		param.put("category", category);
+		int memoryCnt = productMapper.findMemoryListCnt(param);
+		return memoryCnt;
 	}
 	 
 }
