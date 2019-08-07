@@ -190,8 +190,8 @@
 						<li class="active"><a href="#">Home</a></li>
 						<li><a href="#">Hot Deals</a></li>
 						<li><a href="/PCsell/productList">Categories</a></li>
-						<li><a href="#">Laptops</a></li>
 						<li><a href="/PCsell/memory">Accessories</a></li>
+						<li><a href="/PCsell/boardlist">Board</a></li>
 					</ul>
 					<!-- /NAV -->
 				</div>

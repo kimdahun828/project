@@ -3,8 +3,8 @@
 	     pageEncoding="utf-8"%>
 <c:set var="nav" value="board" scope="request"/>
 <c:set var="title" value="게시판" scope="request" />
-<%-- <jsp:include page="/WEB-INF/views/include/header.jsp" /> --%> 
-<!-- lose -->
+ 
+<!-- board -->
 <link rel="stylesheet" href="http://sample.paged.kr/purewhite/theme/pagedtheme/css/default.css?ver=1011">
 <link rel="stylesheet" href="http://sample.paged.kr/purewhite/theme/pagedtheme/skin/board/basic/style.css?v2">
 <link rel="stylesheet" href="http://sample.paged.kr/purewhite/theme/pagedtheme/css/board.common.css?ver=1011">
@@ -13,53 +13,38 @@
 <link rel="stylesheet" href="http://sample.paged.kr/purewhite/theme/pagedtheme/css/contents.css?ver=1011">
 <link rel="stylesheet" href="http://sample.paged.kr/purewhite/theme/pagedtheme/plugin/featherlight/featherlight.min.css?ver=1011">
 
-<link rel="stylesheet" type="text/css" href="/spacerental/resources/styles/blog.css">
-<link rel="stylesheet" type="text/css" href="/spacerental/resources/styles/blog_responsive.css">
+<jsp:include page="/WEB-INF/views/include/header.jsp" /> 
+
+<link rel="stylesheet" type="text/css" href="/PCsell/resources/styles/blog.css">
+<link rel="stylesheet" type="text/css" href="/PCsell/resources/styles/blog_responsive.css">
 
 <a id="topID"></a>
-
-<!-- 상단 시작  -->
-<aside id="topSpacer"></aside>
-<aside id="sideBarCover"></aside>
-<!-- } 상단 끝 --><hr>
 
 <!-- 콘텐츠 시작  -->
 <div id="ctWrap">
 	<div id="container">
 			<header>
-				<h2 id="lose_title">
-					<span class="bo_v_tit">분실물 신고</span>
+				<h2 id="board_title">
+					<span class="bo_v_tit">게시판</span>
 				</h2>
 			</header>
-		<form action="/spacerental/loseview/loseupdate" method="post" class="contact_form" id="contact_form">
-			<input type="hidden" name="loseNo" value="${ lose.loseNo }">
-			<input type="hidden" name="type" value="${ lose.type }">
+		<form action="/PCsell/boardupdate" method="post">
+		<input type="hidden" name="boardNo" value="${ Board.boardNo }"/>
 			<section id="bo_v_info"></section>
 			<div class="bo_w_info write_div">
 				<label for="wr_uploader" class="sound_only">작성자</label> 
-				<input type="text" name="uploader" id="wr_uploader" class="frm_input uploader " placeholder="작성자" value="${ lose.uploader }"/>
-				
-				<label for="wr_date" class="sound_only">분실일자</label> 
-				<input type="date" name="loseDate" id="wr_date" class="frm_input date " required/> 
-				
-				<c:if test="${ loginuser.type eq 'customer' && type eq '분실물' }">
-				<c:forEach var="rent" items="${ rents }">
-					<input type="radio" name="hostNo" value="${ rent.hostNo }">${ rent.spaceName }
-				</c:forEach>
-				</c:if>
-				
-				<c:if test="${ loginuser.type eq 'host' && type eq '습득물' }">
-				<c:forEach var="host" items="${ hosts }">
-					<input type="radio" name="hostNo" value="${ host.hostNo }">${ host.name }
-				</c:forEach>
-				</c:if>
+				<input type="text" name="ID" id="wr_uploader" class="frm_input uploader " placeholder="작성자" value="${ Board.ID }"/>
+
+				<label for="wr_date" class="sound_only">작성일자</label> 
+				<input type="date" name="boardDate" id="wr_date" class="frm_input date " required/>
+
 			</div>
 			<br>
 			<div class="bo_w_tit write_div">
 				<label for="wr_subject" class="sound_only">제목</label>
 				<div id="autosave_wrapper write_div">
 					<input type="text" name="title" id="wr_subject" required class="frm_input full_input required" size="30"
-						maxlength="230" placeholder="제목" value="${ lose.title }">
+						maxlength="230" placeholder="제목" value="${ Board.title }">
 				</div>
 			</div>
 			<br>
@@ -69,7 +54,7 @@
 					<script>
 						var g5_editor_url = "", oEditors = [], ed_nonce = "";
 					</script>
-					<textarea id="wr_content" name="content" class="smarteditor2" maxlength="65536" style="width: 100%; height: 300px">${ lose.content }</textarea>
+					<textarea id="wr_content" name="content" class="smarteditor2" maxlength="65536" style="width: 100%; height: 300px">${ Board.content }</textarea>
 					<span class="sound_only"></span>
 				</div>
 			</div>
@@ -82,7 +67,7 @@
 				</div>
 			</div>
 			<div class="btn_confirm write_div">
-				<a href="/spacerental/loseview/loselist/${lose.type}" class="btn_cancel btn">취소</a> 
+				<a href="/PCsell/boardlist" class="btn_cancel btn">취소</a> 
 				<button type="submit"  id="btn_submit" class="btn_submit btn">수정완료</button>
 			</div>
 		</form>
@@ -182,15 +167,11 @@ var char_max = parseInt(0); // 최대
 
     </div><!-- // #container 닫음 -->
 	<%-- <jsp:include page="sideBar.jsp" /> --%>
-
 </div><!-- // #ctWrap 닫음 -->
 <!-- } 콘텐츠 끝 -->
 
-<hr>
-
 <!-- 하단 시작 { -->
-<footer id="footer">
-</footer>
+<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 
 <script src="http://sample.paged.kr/purewhite/theme/pagedtheme/js/jquery-1.11.0.min.js"></script>
 <script src="http://sample.paged.kr/purewhite/theme/pagedtheme/js/jquery.menu.min.js?ver=171222"></script>
@@ -201,7 +182,6 @@ var char_max = parseInt(0); // 최대
 <script src="http://sample.paged.kr/purewhite/theme/pagedtheme/plugin/shuffleLetters/jquery.shuffleLetters.min.js"></script>
 <script src="http://sample.paged.kr/purewhite/theme/pagedtheme/plugin/featherlight/featherlight.min.js"></script>
 
-<!-- 현재위치 및 서브메뉴 활성화 설정// -->
 <script>
 $(function(){$('.snb.bo_tablebasic, .snb .snb2d_bo_tablebasic').addClass('active');});
 $(document).ready(function(){ 
@@ -220,8 +200,5 @@ $(document).ready(function(){
 });  
 </script>
 
-<!-- //현재위치 및 서브메뉴 활성화 설정 -->
-
 </body>
 </html>
->>>>>>> branch 'master' of https://github.com/sj48695/goott-Space-rental.git

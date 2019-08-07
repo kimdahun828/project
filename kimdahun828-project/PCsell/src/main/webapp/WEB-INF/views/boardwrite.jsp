@@ -3,8 +3,8 @@
 	     pageEncoding="utf-8"%>
 <c:set var="nav" value="board" scope="request"/>
 <c:set var="title" value="게시판" scope="request" />
-<%-- <jsp:include page="/WEB-INF/views/include/header.jsp" /> --%> 
-<!-- lose -->
+  
+
 <link rel="stylesheet" href="http://sample.paged.kr/purewhite/theme/pagedtheme/css/default.css?ver=1011">
 <link rel="stylesheet" href="http://sample.paged.kr/purewhite/theme/pagedtheme/skin/board/basic/style.css?v2">
 <link rel="stylesheet" href="http://sample.paged.kr/purewhite/theme/pagedtheme/css/board.common.css?ver=1011">
@@ -13,30 +13,34 @@
 <link rel="stylesheet" href="http://sample.paged.kr/purewhite/theme/pagedtheme/css/contents.css?ver=1011">
 <link rel="stylesheet" href="http://sample.paged.kr/purewhite/theme/pagedtheme/plugin/featherlight/featherlight.min.css?ver=1011">
 
+<jsp:include page="/WEB-INF/views/include/header.jsp" />
+
 <link rel="stylesheet" type="text/css" href="/PCsell/resources/styles/blog.css">
 <link rel="stylesheet" type="text/css" href="/PCsell/resources/styles/blog_responsive.css">
 
 <a id="topID"></a>
 
 <!-- 상단 시작  -->
-<aside id="topSpacer"></aside>
-<aside id="sideBarCover"></aside>
+<!-- <aside id="topSpacer"></aside>
+<aside id="sideBarCover"></aside> -->
 <!-- } 상단 끝 --><hr>
 
 <!-- 콘텐츠 시작  -->
 <div id="ctWrap">
 	<div id="container">
 			<header>
-				<h2 id="board_title">
-					<span class="bo_v_tit">게시판</span>
-				</h2>
+				<h2 id="board_title"><span class="bo_v_tit">게시판</span></h2>
 			</header>
 		<form action="/PCsell/boardwrite" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="type" value="">
 			<section id="bo_v_info"></section>
 			<div class="bo_w_info write_div">
 				<label for="wr_id" class="sound_only">작성자</label> 
-				<input type="text" name="id" id="wr_id" class="frm_input id " placeholder="작성자" value="${ loginuser.id }">
+				<input type="text" name="ID" id="wr_id" class="frm_input id " placeholder="작성자" >
+				
+				<label for="wr_date" class="sound_only">작성일자</label> 
+				<input type="date" name="boardDate" id="wr_date" class="frm_input date " placeholder="작성일자">&nbsp; &nbsp; 
+				 
+			
 			</div>
 			<br>
 			<div class="bo_w_tit write_div">
@@ -57,6 +61,13 @@
 					<span class="sound_only"></span>
 				</div>
 			</div>
+			<div class="bo_w_flie write_div">
+				<div class="file_wr write_div">
+					<label for="bf_file_1" class="lb_icon"><i class="fa fa-download" aria-hidden="true"></i>
+					<span class="sound_only">파일</span></label> 
+					<input type="file" name="attach" class="frm_file " required="required"
+						id="bf_file_1" title="파일첨부 1 : 용량 1,048,576 바이트 이하만 업로드 가능">
+				</div>
 			<div class="btn_confirm write_div">
 				<a href="/PCsell/boardlist" class="btn_cancel btn">취소</a> 
 				<button type="submit"  id="btn_submit" class="btn_submit btn">작성완료</button>
@@ -156,17 +167,16 @@ var char_max = parseInt(0); // 최대
 </script>
 <hr>
 
-    </div><!-- // #container 닫음 -->
+   </div><!-- // #container 닫음 -->
 	<%-- <jsp:include page="sideBar.jsp" /> --%>
 
 </div><!-- // #ctWrap 닫음 -->
 <!-- } 콘텐츠 끝 -->
 
-<hr>
-
 <!-- 하단 시작 { -->
-<footer id="footer">
-</footer>
+<jsp:include page="/WEB-INF/views/include/footer.jsp" />
+
+
 
 <script src="http://sample.paged.kr/purewhite/theme/pagedtheme/js/jquery-1.11.0.min.js"></script>
 <script src="http://sample.paged.kr/purewhite/theme/pagedtheme/js/jquery.menu.min.js?ver=171222"></script>
@@ -178,7 +188,7 @@ var char_max = parseInt(0); // 최대
 <script src="http://sample.paged.kr/purewhite/theme/pagedtheme/plugin/featherlight/featherlight.min.js"></script>
 
 <!-- 현재위치 및 서브메뉴 활성화 설정// -->
-<script>
+<script type="text/javascript">
 $(function(){$('.snb.bo_tablebasic, .snb .snb2d_bo_tablebasic').addClass('active');});
 $(document).ready(function(){ 
 	if ( $("#snb > li").is(".snb.active") ) {
@@ -193,6 +203,9 @@ $(document).ready(function(){
 		$('.noInfoPageTit').addClass('active');
 		$('#page_title').addClass('subTopBg_00'); 
 	} 
+	
+	
+	
 });  
 </script>
 <!-- //현재위치 및 서브메뉴 활성화 설정 -->
