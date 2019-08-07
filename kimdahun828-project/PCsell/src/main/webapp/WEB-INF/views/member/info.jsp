@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -49,24 +50,15 @@
 						<li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
 						<li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
 					</ul>
-					<c:choose>
-			            <c:when test="${ empty loginuser }">
-				            <div class="top-header">
-								<ul class="header-links pull-right">
-					            	<li><a href="/PCsell/member/login">Login</a></li>
-									<li><a href="/PCsell/member/register">Register</a></li>
-								</ul>
-							</div>
-							<div class="hamburger"><i class="fa fa-bars trans_200"></i></div>
-			            </c:when>
-			            <c:otherwise>
-			             <div class="top-header">
-							<ul class="header-links pull-right">										   	
-				            	<li><a href="/PCsell/member/logout">로그아웃</a></li>
-							</ul>
-						</div>				
-			            </c:otherwise>
-			            </c:choose>			
+					<ul class="header-links pull-right">
+						<li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
+						<li>
+							<a href="#" id="logoutButton"><i class="fa fa-cog"></i> 로그아웃</a>
+						</li>
+						<li>
+							<a href="#" id="delete"><i class="fa fa-power-off"></i> 탈퇴하기</a>
+						</li>
+					</ul>
 				</div>
 			</div>
 			<!-- /TOP HEADER -->

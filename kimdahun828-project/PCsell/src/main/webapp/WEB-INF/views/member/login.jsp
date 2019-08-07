@@ -64,10 +64,11 @@
 						</div>
 					</c:if>
 					
-					<form id="loginForm">
+					<form id="loginForm" action="login" method="post">
 					
 						<!-- 아이디 -->
 						<div class="form-group">
+					
 							<label for="id">아이디</label>
 							<input type="text" class="form-control" name="id" id="id">
 						</div>
@@ -78,16 +79,8 @@
 							<input type="password" class="form-control" name="passwd" id="passwd">
 						</div>
 						
-						<div class="form-group" style="float: left">
-							<input type="checkbox" name="remember-me" id="remember-me" />
-							<label for="remember-me">로그인 기억하기</label>
-						</div>
 						
-						<div style="float: right">
-							<a href="#">비밀번호를 잊으셨나요?</a>
-						</div>
-						
-						<div style="clear: both">
+							<div style="clear: both">
 							<button id="loginButton" class="btn btn-transparent">로그인</button>
 							
 							<a href="register" class="btn btn-transparent">회원가입</a>
@@ -103,61 +96,9 @@
 
 <jsp:include page="/WEB-INF/views/include/footer.jsp" />
 
-<jsp:include page="/WEB-INF/views/include/jsimport.jsp" />
+<%-- <jsp:include page="/WEB-INF/views/include/jsimport.jsp" /> --%>
 
-<script type="text/javascript">
 
-/* ========================================= 로그인 =============================================== */
-
-$("#loginButton").on("click", function(e){
-	e.preventDefault();
-	doLogin();
-});
-
-function doRegister() {
-	
-	if (!confirm("회원가입을 진행하시겠습니까?")){
-		return;
-	}
-	
-	var contextPath = $("#contextPath").val();
-	
-	var id = $("#id").val();
-	var passwd = $("#passwd").val();
-	var confirmPasswd = $("#confirm-passwd").val();
-	var email = $("#email").val();
-	var hp = $("#hp").val();
-	
-	if (id.length === 0) {
-		alert("아이디를 입력해 주세요.");
-		$("#id").focus();
-		return;
-	}
-	
-	$.ajax({
-		method: "post",
-		url: contentPath + "/member/doLogin",
-		contentType: "application/x-www-form-urlencoded;charset=utf-8",
-		dataType: "text",
-		data: $("#loginForm").serialize(),
-		success: function(resp) {
-			if (resp === 'success'){
-				alert("로그인되었습니다.");
-				location.href = "${path}/";
-				return;
-			} else {
-				alert("아이디가 존재하지 않거나, 비밀번호가 일치하지 않습니다.");
-				return;
-			}
-		},
-		error: function(err) {
-			console.log(err);
-		}
-	});
-	
-}
-
-</script>
 
 </body>
 

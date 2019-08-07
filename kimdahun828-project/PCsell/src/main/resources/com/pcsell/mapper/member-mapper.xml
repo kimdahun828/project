@@ -5,39 +5,23 @@
 
 <mapper namespace="com.pcsell.mapper.MemberMapper">
 
-	<insert id="register">
-	 INSERT INTO tbl_member(
-            ID,
-            PASSWD,
-            EMAIL,
-            HP,
-            USERTYPE
-        )VALUES(
-            #{ID},
-            #{PASSWD},
-            #{EMAIL},
-            #{HP},
-            #{USERTYPE}
-        )
+	<insert id="insertMember" parameterType="Member">
+		INSERT INTO member (ID, PASSWD, EMAIL, HP, USERTYPE) 
+		VALUES (#{ id }, #{ passwd }, #{ email }, #{ hp }, #{ userType })
 	</insert>
 	
-	<!-- 회원 정보 변경 -->
-	<update id="update" parameterType="Member">	
-		UPDATE MEMBER
-		SET
-			ID = #{ID},
-			PASSWD = #{PASSWD}
-		WHERE
-			EMAIL = #{EMAIL}
-	</update>
+	<select id="selectMemberByIdAndPasswd"
+		parameterType="hashmap" resultType="Member">
+		SELECT id, passwd, email, hp, userType
+		FROM Member
+		WHERE ID = #{ id } AND PASSWD = #{ passwd }
+	</select>
 	
-	<!-- 회원 삭제 처리 -->
-	<update id="delete" parameterType="java.lang.String">
-		UPDATE MEMBER
-		SET DELETED = '1'
-		WHERE EMAIL = #{email}
-	</update>
-
+	<!--  host등록   -->    	
+<!-- 	<insert id="insertHost" parameterType="Host">
+		INSERT INTO member (ID, PASSWD, EMAIL, HP, USERTYPE) 
+		VALUES (#{ id }, #{ passwd }, #{ email }, #{ hp }, #{ userType })
+	</insert> -->
 	
 
 </mapper>

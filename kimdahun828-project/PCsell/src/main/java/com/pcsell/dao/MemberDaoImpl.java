@@ -2,12 +2,10 @@ package com.pcsell.dao;
 
 import java.util.HashMap;
 
-import javax.inject.Inject;
-
-import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.pcsell.mapper.MemberMapper;
+import com.pcsell.vo.Host;
 import com.pcsell.vo.Member;
 
 public class MemberDaoImpl implements MemberDao {
@@ -32,21 +30,13 @@ public class MemberDaoImpl implements MemberDao {
 		this.memberMapper = memberMapper;
 	}
 	
-	@Inject
-    private SqlSession session;
-
-	@Override
-	public void insertMember(Member member) {
-
-		session.insert("insertMember",member);
-		
-	}
+	
 
 	@Override
 	public Member selectMemberByIdAndPasswd(String id, String passwd) {
 		
 		HashMap<String, Object> params = new HashMap<String, Object>();
-		params.put("memberId", id);
+		params.put("id", id);
 		params.put("passwd", passwd);
 		
 		Member member = memberMapper.selectMemberByIdAndPasswd(params);
@@ -55,16 +45,27 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public boolean loginCheck(Member vo) {
+	public void insertMember(Member member) {
+		memberMapper.insertMember(member);
+	}
+	
+	public void insertHost(Host host) {
+		memberMapper.insertHost(host);
+	}
+
+	@Override
+	public boolean loginCheck(Member member) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public Member viewMember(Member vo) {
+	public Member viewMember(Member member) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 	
 	
  

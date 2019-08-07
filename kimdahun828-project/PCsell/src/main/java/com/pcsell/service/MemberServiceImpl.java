@@ -2,50 +2,55 @@ package com.pcsell.service;
 
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-
-import com.pcsell.repository.MemberRepository;
+import com.pcsell.dao.MemberDao;
+import com.pcsell.util.Util;
+import com.pcsell.vo.Host;
 import com.pcsell.vo.Member;
 
-@Service("MemberService")
-public class MemberServiceImpl implements MemberService {
 
-	private static final Logger logger = LoggerFactory.getLogger(MemberServiceImpl.class);
-	public static final String WRONG_PASSWD = "wrong_passwd";
+public class MemberServiceImpl implements MemberService {
 	
-	private MemberRepository memberRepository;
-	public MemberRepository getMemberRepository() {
-		return memberRepository;
+	private MemberDao memberDao;
+	public MemberDao getMemberDao() {
+		return memberDao;
 	}
-	public void setMemberRepository(MemberRepository memberRepository) {
-		this.memberRepository = memberRepository;
-	}
+	public void setMemberDao(MemberDao memberDao) {
+		this.memberDao = memberDao;
+	}	
 
 	@Override
 	public void registerMember(Member member) {
-		// TODO Auto-generated method stub
+		String passwd = Util.getHashedString(member.getPasswd(), "SHA-256"); 
+		member.setPasswd(passwd);
+		
+		memberDao.insertMember(member);
 	}
 
 	@Override
-	public Member findMemberByIdAndPasswd(String memberId, String passwd) {
-		// TODO Auto-generated method stub
-		return null;
+	public Member findMemberByIdAndPasswd(String id, String passwd) {
+		passwd = Util.getHashedString(passwd, "SHA-256"); 
+		Member member = memberDao.selectMemberByIdAndPasswd(id, passwd);
+
+		return member;
+	}
+	
+	public void insertHost(Host host) {
+		memberDao.insertHost(host);
 	}
 
-	public Member findMemberByIdPasswd(String id, String passwd) {
-		// TODO Auto-generated method stub
-		return null;
+	@Override
+	public void registerHost(Host host) {
+		String passwd = Util.getHashedString(host.getPasswd(), "SHA-256"); 
+		host.setPasswd(passwd);
+		
+		memberDao.insertHost(host);
+		
 	}
 	
 	//회원 로그인 정보
 	@Override
-	public Member viewMember(Member vo) {
-		return memberRepository.viewMember(vo); 
+	public Member viewMember(Member member) {
+		return memberDao.viewMember(member);
 	}
 	//회원 로그아웃
 	@Override
@@ -55,19 +60,22 @@ public class MemberServiceImpl implements MemberService {
 	
 	// 회원 로그인 체크
 	@Override
-	public boolean loginCheck(Member vo, HttpSession session) {
-		boolean result = memberRepository.loginCheck(vo);
+	public boolean loginCheck(Member member, HttpSession session) {
+		boolean result = memberDao.loginCheck(member);
 		if (result) {
-			Member vo2 = viewMember(vo);
+			Member vo2 = viewMember(member);
 			session.setAttribute("id", vo2.getId());
 		}
 		return result;
 	}
+	
+	
 	@Override
 	public void insertMember(Member member) {
-		// TODO Auto-generated method stub
+		memberDao.insertMember(member);
 		
 	}
-
+	
+	
 	
 }

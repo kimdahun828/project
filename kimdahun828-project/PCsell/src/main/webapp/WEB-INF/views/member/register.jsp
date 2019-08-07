@@ -67,7 +67,7 @@
 						<!-- 비밀번호 확인 -->
 						<div class="form-group">
 							<label for="confirm-passwd">비밀번호 확인</label>
-							<input type="password" class="form-control" name="confirmPasswd" id="confirm-passwd">
+							<input type="password" class="form-control" name="confirm" id="confirm-passwd">
 						</div>
 						
 						<!-- 이메일 -->
@@ -82,6 +82,11 @@
 							<input type="hp" class="form-control" name="hp" id="hp">
 						</div>
 						
+						<div class="wrap-input100">
+							<input type="radio" name="userType" value="member">일반
+							<input type="radio" name="userType" value="host">관리자
+						</div>
+						
 						<button id="registerButton" type="submit" class="btn btn-transparent">회원 가입</button>
 						
 					</form>
@@ -93,91 +98,9 @@
 
 <jsp:include page="/WEB-INF/views/include/footer.jsp" />
 
-<jsp:include page="/WEB-INF/views/include/jsimport.jsp" />
+<%-- <jsp:include page="/WEB-INF/views/include/jsimport.jsp" /> --%>
 
-<script type="text/javascript">
 
-$("#registerButton").on("click", function(e){
-	//e.preventDefault();
-	//doRegister();
-});
-
-function doRegister() {
-	
-	if (!confirm("회원가입을 진행하시겠습니까?")){
-		return;
-	}
-	
-	var contextPath = $("#contextPath").val();
-	
-	var id = $("#id").val();
-	var passwd = $("#passwd").val();
-	var confirmPasswd = $("#confirm-passwd").val();
-	var email = $("#email").val();
-	var hp = $("#hp").val();
-	
-	if (id.length === 0) {
-		alert("아이디를 입력해 주세요.");
-		$("#id").focus();
-		return;
-	}
-	
-	if (passwd.length === 0) {
-		alert("비밀번호를 입력해 주세요.");
-		$("#passwd").focus();
-		return;
-	}
-	
-	if (passwd !== confirmPasswd) {
-		alert("비밀번호가 일치하지 않습니다.");
-		$("#confirm-passwd").val('');
-		$("#confirm-passwd").focus();
-		return;
-	}
-	
-	if (email.length === 0) {
-		alert("이메일을 입력해 주세요.");
-		$("#email").focus();
-		return;
-	}
-	
-	if (hp.length === 0) {
-		alert("휴대전화번호를 입력해 주세요.");
-		$("#hp").focus();
-		return;
-	}
-	
-	$.ajax({
-		type: "post",
-		url: contextPath + "/member/register",
-		dataType: "text",
-		data: $("#registerForm").serialize(),
-		success: function(resp) {
-			if (resp === 'success') {
-				alert("회원가입이 정상적으로 처리되었습니다.");
-				location.href = contextPath + "/member/login";
-			} else if (resp === 'wrong_id'){
-				alert("이미 존재하는 아이디이거나 사용이 불가한 아이디입니다.");
-				return;	
-			} else if (resp === 'wrong_passwd') {
-				alert("사용 불가능한 비밀번호이거나, 비밀번호가 일치하지 않습니다.");
-				return;	
-			} else if (resp === 'wrong_email'){
-				alert("이미 존재하는 이메일이거나 사용이 불가한 이메일입니다.");
-				return;
-			} else if (resp === 'wrong_hp') {
-				alert("휴대전화를 다시 한번 확인 바랍니다.");
-				return;
-			}
-		},
-		error: function(err) {
-			// do nothing...
-		}
-	});
-	
-}
-
-</script>
 
 </body>
 
