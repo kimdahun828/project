@@ -3,15 +3,169 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pcsell.mapper.BoardMapper">
 	
-	<select id="findList" resultType="com.pcsell.vo.Board">
-		SELECT title, content, ID
+	<insert id="registerboard" parameterType="Board">
+		<selectKey keyColumn="boardNo" keyProperty="boardNo" order="AFTER" resultType="int">
+			SELECT BOARD_SEQUENCE.CURRVAL FROM DUAL 
+		</selectKey>
+		INSERT INTO BOARD(BOARDNO, TITLE, CONTENT, ID, BOARDDATE)
+		VALUES ( BOARD_SEQUENCE.NEXTVAL , #{ title }, #{ content }, #{ ID }, #{ boardDate })
+	</insert>
+	
+	<insert id="registerboardFile" parameterType="BoardFile">
+		INSERT INTO BOARDFILE(boardFileNo, savedFileName, boardNo, userfileName)
+		VALUES ( BOARDFILE_SEQUENCE.NEXTVAL, #{ savedFileName }, #{ boardNo }, #{ userFileName })
+	</insert> 
+	
+	<select id="findList" resultType="Board">
+		SELECT boardNo, title, content, ID, boardDate
+		FROM BOARD
+        ORDER BY boardNo DESC
+	</select>
+	
+	<select id="boardDetail" parameterType="int" resultType="Board">
+		SELECT boardNo, title, content, ID, boardDate
+		FROM BOARD
+		WHERE boardNo = #{ boardNo }
+	</select>
+	
+	<select id="selectBoardByBoardNo" parameterType="int" resultType="Board">
+		SELECT boardNo, title, content, ID, boardDate
+		FROM BOARD
+		WHERE boardNo = #{ boardNo }
+	</select>
+	
+	<select id="selectBoardFilesByBoardNo" parameterType="int" resultType="BoardFile">
+		SELECT boardFileNo, savedFileName, boardNo, userfileName
+		FROM BOARDFILE
+        where boardNo = #{ boardNo }
+	</select>
+	
+	<update id="updateBoardUpdate" parameterType="hashmap">
+	UPDATE BOARD
+	SET title = #{title}, content=#{content}
+	WHERE boardNo = #{boardNo}
+	</update>
+	
+	<delete id="boardDelete" parameterType="int">
+		DELETE FROM BOARD
+		WHERE boardNo = #{ boardNo }
+	</delete>
+	
+	<delete id="boardFileDelete" parameterType="int">
+		DELETE FROM BOARDFILE
+		WHERE boardNo = #{ boardNo }
+	</delete>
+	
+	<select id="searchboardalist" parameterType="String" resultType="Board">
+		SELECT boardNo, title, content, ID, boardDate
+		FROM BOARD 
+        where  title LIKE '%'||#{ value }||'%'
+        ORDER BY boardNo ASC
+	</select>
+	
+	<!-- 총 게시글 개수 확인 -->
+	<select id="selectboardListCnt" resultType="int">
+		SELECT count(*) as listCnt
 		FROM BOARD
 	</select>
 	
-	<select id="loseDetail" parameterType="int" resultType="com.pcsell.vo.Board">
-		SELECT title, content
-		FROM BOARD
+	<!-- 총 게시글 개수 확인 -->
+	<select id="selectBoardListCnt" resultType="int">
+		select count(*) as listCnt
+		from BOARD
 	</select>
 	
+	<select id="selectBoard" resultType="Board">
+		select * from 
+			(select boardNo, title, content, ID, boardDate, rownum as rnum
+			from BOARD
+			order by boardNo desc)
+        where rnum between #{ startList } and #{ endList }
+	</select>
+	
+	<!-- =========================================
+						Review 
+	============================================= -->
+
+	<sql id="reviewBasicColumns">
+		boardNo, title, content, ID, boardDate
+	</sql>
+	
+	
+	<insert id="insertReview" parameterType="Review">
+		INSERT INTO Review
+		(
+			<include refid="reviewBasicColumns"/>
+		)
+		VALUES
+		(
+			Review_SEQUENCE.NEXTVAL
+			, Review_SEQUENCE.CURRVAL
+			, 1
+			, 0
+			, #{content}
+			, #{writer}
+			, #{spaceNo}
+		)
+	</insert>
+	
+	<update id="updateReview" parameterType="Review">
+		UPDATE Review
+		SET CONTENT = #{ content }
+		WHERE reviewNo = #{ reviewNo }
+	</update>
+	
+	<delete id="deleteReview" parameterType="int">
+		DELETE FROM Review			
+		WHERE reviewNo = #{ reviewNo }
+	</delete>	
+	
+	<!-- ============================================
+							reReview 
+		============================================= -->
+	
+	<select id="selectReviewByReviewNo" 
+		parameterType="int" resultType="Review">
+		SELECT <include refid="reviewBasicColumns"/>, regDate
+		FROM Review 
+		WHERE reviewNo = #{ reviewNo }
+	</select>
+	
+	<update id="updateReviewStep" parameterType="Review">
+		UPDATE Review
+		SET STEP = STEP + 1
+		WHERE GROUPNO = #{ groupNo } AND STEP <![CDATA[>]]> #{ step }
+	</update>
+	
+	<insert id="insertComment" parameterType="Review">
+		INSERT INTO Review
+		(
+			<include refid="reviewBasicColumns"/>
+		)
+		VALUES
+		(
+			Review_SEQUENCE.NEXTVAL
+			, #{groupNo}
+			, #{step}
+			, #{depth}
+			, #{content}
+			, #{writer}
+			, #{boardNo}
+		)	
+	</insert>
+	
+	<select id="selectReviewsByBoardNo" 
+		parameterType="int" resultType="Review">
+		SELECT <include refid="reviewBasicColumns"/>, regDate
+		FROM Review 
+		WHERE boardNO = #{ boardNo } ORDER BY GROUPNO DESC, STEP ASC 
+	</select>
+	
+<!-- 	<resultMap id="boardMap" type="Board">
+		<id column="barodNo" property="barodNo" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="ID" property="ID" />
+	</resultMap> -->
 
 </mapper>
