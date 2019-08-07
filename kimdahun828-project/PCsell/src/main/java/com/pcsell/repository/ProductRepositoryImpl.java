@@ -38,20 +38,7 @@ public class ProductRepositoryImpl implements ProductRepository {
 	public void setProductMapper(ProductMapper productMapper) {
 		this.productMapper = productMapper;
 	} 
-	@Override
-	public String insertProduct(Product product) {
-		productMapper.insertProduct(product);
-		
-		return product.getPcCode();
-	}
 	
-	@Override
-	public void insertProductImage(Photo photo) {
-		productMapper.insertProductImage(photo);
-		
-		return;
-		
-	}
 	@Override
 	public ArrayList<Product> DramList() {
 		List<Product> dramList = productMapper.dramList();
@@ -100,5 +87,115 @@ public class ProductRepositoryImpl implements ProductRepository {
 		int memoryCnt = productMapper.findMemoryListCnt(param);
 		return memoryCnt;
 	}
-	 
+	
+	@Override
+	public List<Product> selectProduct() {
+		
+		List<Product> products = productMapper.selectProduct();
+		
+		return products;
+	}
+	
+	@Override
+	public List<Product> selectProductByCategory(String category) {
+		
+		List<Product> products = productMapper.selectProductByCategory(category);
+		
+		return products;
+	}
+	
+	@Override
+	public String insertProduct(Product product) {
+		
+		productMapper.insertProduct(product);
+		
+		return product.getPcCode();
+	}
+	
+	@Override
+	public void insertProductImage(Photo photo) {
+		
+		productMapper.insertProductImage(photo);
+		
+		return;
+		
+	}
+	
+	@Override
+	public Product selectProductByPcCode(String pcCode) {
+		
+		Product product = productMapper.selectProductByPcCode(pcCode);
+		
+		return product;
+	}
+	
+	@Override
+	public List<Photo> selectProductImageByPcCode(String pcCode) {
+		
+		List<Photo> photo = productMapper.selectProductImageByPcCode(pcCode);
+		
+		return (ArrayList<Photo>) photo;
+	}
+	
+	@Override
+	public Photo selectProductImageBySavedFileName(String fileName) {
+		
+		Photo productImage = productMapper.selectProductImageBySavedFileName(fileName);
+		
+		return productImage;
+	}
+	
+	@Override
+	public void updateProduct(Product product) {
+	
+		productMapper.updateProduct(product);
+		
+	}
+	
+	@Override
+	public void deleteProductImage(String savedFileName) {
+	
+		productMapper.deleteProductImage(savedFileName);
+		
+	}
+	
+	@Override
+	public void deleteProduct(String pcCode) {
+		
+		productMapper.deleteProduct(pcCode);
+		
+	}
+	
+	@Override
+	public Photo findProductImageByPcCode(String pcCode) {
+		
+		Photo productImage = productMapper.findProductImageByPcCode(pcCode);
+		
+		return productImage;
+	}
+	
+	@Override
+	public List<Product> selectCPU() {
+	
+		List<Product> cpu = productMapper.selectCPU();
+		
+		return cpu;
+	}
+	
+	@Override
+	public List<Product> selectMainBoard() {
+		
+		List<Product> mainBoard = productMapper.selectMainBoard();
+		
+		return mainBoard;
+	}
+	
+	@Override
+	public List<Product> selectVGA() {
+
+		List<Product> vga = productMapper.selectVGA();
+		
+		return vga;
+	}
+	
 }

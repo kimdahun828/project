@@ -3,8 +3,8 @@ package com.pcsell.controller;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+//github.com/kimdahun828/project.git
 import java.util.List;
-import java.util.Locale;
 
 import javax.servlet.ServletContext;
 
@@ -32,6 +32,22 @@ public class ProductController {
 	@Qualifier("productService")
 	private ProductService productService;
 	
+	@RequestMapping(
+			value="/productCategoryList",
+			method=RequestMethod.GET)
+	public String productCategoryList(String category, Model model) {
+		
+		List<Product> products = productService.findProductByCategory(category);
+		
+		for(Product product : products) {
+			List<Photo> photo = productService.findProductImage(product.getPcCode());
+			product.setFiles(photo);
+		}
+		
+		model.addAttribute("products", products);
+		
+		return "productList";
+	}
 	
 	@RequestMapping(
 			value="/productWrite",
@@ -39,20 +55,22 @@ public class ProductController {
 	public String productWrite(MultipartHttpServletRequest req, Product product) {
 
 		MultipartFile mf = req.getFile("productImage");
-		if (mf != null) {
+		boolean test = mf.isEmpty();
+		
+		if (test == false) {
 			
 			ServletContext application = req.getServletContext();
-			String path = application.getRealPath("/upload-files");
+			String path = application.getRealPath("resources/img");
 			
 			String userFileName =  mf.getOriginalFilename();
-			if (userFileName.contains("\\")) { // iexplore 寃쎌슦
+			if (userFileName.contains("\\")) { // iexplore 野껋럩�뒭
 				//C:\AAA\BBB\CCC.png -> CCC.png 
 				userFileName = userFileName.substring(userFileName.lastIndexOf("\\") + 1);
 			}
 			String savedFileName = Util.makeUniqueFileName(userFileName);
 
 			try {
-				mf.transferTo(new File(path, savedFileName)); //�뙆�씪 ���옣
+				mf.transferTo(new File(path, savedFileName)); //占쎈솁占쎌뵬 占쏙옙占쎌삢
 				
 				Photo photo = new Photo();
 				photo.setUserFileName(userFileName);
@@ -61,32 +79,36 @@ public class ProductController {
 				files.add(photo);
 				product.setFiles(files);
 				
-				//�뜲�씠�꽣 ���옣
 				productService.registerProduct(product);
 				
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}			
+		} else if(test != false) {
+			
+			productService.registerProduct2(product);
+			
+			return "redirect:/productList";
 		}
-	
+
 		return "redirect:/productList";
 	}
 	
-	
-//	@RequestMapping(value = "/memory", method = RequestMethod.GET)
-//	public String memoryList(Locale locale, Model model) {
+	@RequestMapping(value="/productUpdate/{pcCode}", method=RequestMethod.GET)
+	public String productUpdateForm(@PathVariable String pcCode, Model model) {
 		
-//		List<Product> products = productService.DramList();		
-//		for (Product product : products) {
-//			List<Photo> files = productService.dramFileListByPcCode(product.getPcCode());
-//			product.setFiles(files);
-//		}
+		Product product = productService.findProductByPcCode(pcCode);
+		if(product == null) {
+			return "redirect:/productList";
+		}
 		
-//		model.addAttribute("product", products);
+		List<Photo> photo = productService.findProductImage(pcCode);
+		product.setFiles((List<Photo>) photo);
 		
+		model.addAttribute("product", product);
 		
-//		return "memory";
-//	}	
+		return "productUpdate";
+	}
 	
 	@RequestMapping(value = "/dram/{pcCode}", method = RequestMethod.GET)
 	public String dramDetail(@PathVariable String pcCode, Model model) { //Dram Detail
@@ -155,4 +177,84 @@ public class ProductController {
 		return "memory";
 	}
 	
+	@RequestMapping(
+			path="/productUpdate",
+			method=RequestMethod.POST)
+	public String productUpdate(MultipartHttpServletRequest req, Product product) {
+		
+		MultipartFile mf = req.getFile("productImage");
+		boolean test = mf.isEmpty();
+		
+		if (test != true) {
+			
+			ServletContext application = req.getServletContext();
+			String path = application.getRealPath("resources/img");
+			
+			String userFileName =  mf.getOriginalFilename();
+			if (userFileName.contains("\\")) { // iexplore 野껋럩�뒭
+				//C:\AAA\BBB\CCC.png -> CCC.png 
+				userFileName = userFileName.substring(userFileName.lastIndexOf("\\") + 1);
+			}
+			String savedFileName = Util.makeUniqueFileName(userFileName);
+
+			try {
+				mf.transferTo(new File(path, savedFileName)); //占쎈솁占쎌뵬 占쏙옙占쎌삢
+				
+				Photo photo = new Photo();
+				photo.setUserFileName(userFileName);
+				photo.setSavedFileName(savedFileName);
+				photo.setPcCode(product.getPcCode());
+				productService.registerUploadFile(photo);
+				
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}			
+		} else if (test != false) {
+			productService.modifyProduct(product);
+			return "redirect:/detail/" + product.getPcCode();
+		}
+	
+		return "redirect:/detail/" + product.getPcCode();
+	}
+	
+	@RequestMapping(path="/img/{fileName}", method = RequestMethod.GET)
+	public String detailImage(@PathVariable String fileName, Model model) {
+		
+		Photo productImage = productService.findProductImageBySavedFileName(fileName);
+		
+		model.addAttribute("productImage", productImage);		
+		
+		return "detail";
+	}
+	
+	@RequestMapping(value="/productDelete/{pcCode}", method=RequestMethod.GET)
+	public String deleteProduct(@PathVariable String pcCode) {
+		
+		
+		File file = new File(pcCode);
+		if (file.exists()) {
+			file.delete();
+		}
+		
+		productService.deleteProductImage(pcCode);
+		
+		productService.deleteProduct(pcCode);
+		
+		return"redirect:/productList";
+	}
+	
+	@RequestMapping(path="/deleteImage", method = RequestMethod.GET)
+	public String deleteFile(String pcCode, String savedFileName, Model model) {
+		
+		Photo photo = productService.findProductImageByPcCode(pcCode);
+		
+		File file = new File(photo.getPcCode());
+		if (file.exists()) {
+			file.delete();
+		}
+		
+		productService.deleteProductImage(pcCode);
+		
+		return "redirect:/productUpdate/" + pcCode;
+	}
 }

@@ -67,7 +67,7 @@
 						<!-- LOGO -->
 						<div class="col-md-3">
 							<div class="header-logo">
-								<a href="${path }" class="logo">
+								<a href="${ path }/" class="logo">
 									<img src="/PCsell/resources/img/logo.png" alt="">
 								</a>
 							</div>
@@ -179,10 +179,13 @@
 					<!-- NAV -->
 					<ul class="main-nav nav navbar-nav">
 						<li class="active"><a href="#">Home</a></li>
+
 						<li><a href="#">Hot Deals</a></li>
-						<li><a href="/PCsell/productList">Categories</a></li>
+						<li><a href="${ path }/productList">Categories</a></li>
+
 						<li><a href="#">Laptops</a></li>
 						<li><a href="/PCsell/memorylist">Memories</a></li>
+
 					</ul>
 					<!-- /NAV -->
 				</div>

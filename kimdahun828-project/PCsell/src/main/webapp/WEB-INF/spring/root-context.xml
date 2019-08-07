@@ -18,8 +18,9 @@
 	
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 
-	<context:component-scan base-package="com.pcsell.repository" />
+
 	<context:component-scan base-package="com.pcsell.dao" />
+	<context:component-scan base-package="com.pcsell.repository" />
 	<context:component-scan base-package="com.pcsell.service" />
 		
 		<bean id="dataSource"
@@ -95,10 +96,8 @@
 				  value="com.pcsell.mapper.ProductMapper" />
 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
 	</bean>
-	
-	<!-- ****** Member **************** -->
-	
-	<!-- <bean id="memberService" class="com.pcsell.service.MemberServiceImpl"></bean>
+
+	<bean id="memberService" class="com.pcsell.service.MemberServiceImpl" />
 	
 	<bean id="memberDao" class="com.pcsell.dao.MemberDaoImpl">
 		<property name="sessionTemplate" ref="sqlSessionTemplate" />
@@ -110,6 +109,6 @@
 		<property name="mapperInterface"
 				  value="com.pcsell.mapper.MemberMapper" />
 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
-	</bean> -->
+	</bean>
 	
 </beans>

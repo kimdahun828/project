@@ -121,4 +121,96 @@
 		where category like '%'||#{ category }||'%'
 	</select>
 
+
+	<select id="selectProduct" resultType="Product">
+		SELECT PCCODE, NAME, CATEGORY, PRICE
+		FROM PRODUCT
+		ORDER BY CATEGORY DESC
+	</select>
+
+	<select id="selectCPU" resultType="Product">
+		SELECT PCCODE, NAME, CATEGORY, PRICE
+		FROM PRODUCT
+		WHERE CATEGORY = 'CPU'
+		ORDER BY CATEGORY DESC
+	</select>
+	
+	<select id="selectMainBoard" resultType="Product">
+		SELECT PCCODE, NAME, CATEGORY, PRICE
+		FROM PRODUCT
+		WHERE CATEGORY = 'MainBoard'
+		ORDER BY CATEGORY DESC
+	</select>
+
+	<select id="selectVGA" resultType="Product">
+		SELECT PCCODE, NAME, CATEGORY, PRICE
+		FROM PRODUCT
+		WHERE CATEGORY = 'VGA'
+		ORDER BY CATEGORY DESC
+	</select>
+
+	<select id="selectProductImageByPcCode" parameterType="String" resultType="Photo">
+		SELECT PCCODE, USERFILENAME, SAVEDFILENAME
+		FROM PHOTO
+		WHERE pcCode = #{ pcCode }
+	</select>
+	
+	<select id="selectProductImageBySavedFileName" parameterType="String" resultType="Photo">
+		SELECT PCCODE, USERFILENAME, SAVEDFILENAME
+		FROM PHOTO
+		WHERE SAVEDFILENAME = #{ savedFileName }
+	</select>
+
+	<select id="findProductImageByPcCode" parameterType="String" resultType="Photo">
+		SELECT PCCODE, USERFILENAME, SAVEDFILENAME
+		FROM PHOTO
+		WHERE PCCODE = #{ pcCode }	
+	</select>
+	
+	<select id="selectProductByCategory" 
+			resultType="Product">
+		SELECT pcCode, name, category, price
+		FROM PRODUCT
+		WHERE category = #{ category }
+		ORDER BY category DESC
+	</select>
+
+	<select id="selectProductByPcCode" parameterType="String" resultType="Product">
+		SELECT PCCODE, NAME, CATEGORY, DIVISION, COMPANYNAME, GENERATION, CORE, THREAD, CAPACITY, CLOCK, CHIPSET, SOCKET, INTERFACETYPE, BUFFER, TYPE, OUTPUT, PRICE, COUNT
+		FROM PRODUCT
+		WHERE PCCODE = #{ pcCode }
+	</select>
+
+	<update id="updateProduct" parameterType="Product">
+		UPDATE PRODUCT
+		SET NAME = #{ name },
+			DIVISION = #{ division },
+			COMPANYNAME = #{ companyName },
+			GENERATION = #{ generation },
+			CORE = #{ core },
+			THREAD = #{ thread },
+			CAPACITY = #{ capacity },
+			CLOCK = #{ clock },
+			CHIPSET = #{ chipSet },
+			SOCKET = #{ socket },
+			INTERFACETYPE = #{ interfaceType },
+			BUFFER = #{ buffer },
+			TYPE = #{ type },
+			OUTPUT = #{ outPut },
+			PRICE = #{ price },
+			COUNT = #{ count },
+			CATEGORY = #{ category }
+		WHERE PCCODE = #{ pcCode }
+	</update>
+	
+	<delete id="deleteProduct" parameterType="String">
+		DELETE FROM PRODUCT
+		WHERE PCCODE = #{ pcCode }
+	</delete>
+	
+	<delete id="deleteProductImage" parameterType="String">
+		DELETE FROM PHOTO
+		WHERE pcCode = #{ pcCode }
+	</delete>
+	
 </mapper>

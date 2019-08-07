@@ -75,8 +75,9 @@
 		<div class="container">
 			<!-- row -->
 			<div class="row">
-				<form action="productWrite" method="post"
+				<form action="${ path }/productUpdate" method="post"
 					enctype="multipart/form-data">
+					<input type="hidden" name="pcCode" value="${ product.pcCode }">
 					<!-- Product details -->
 					<div class="col-md-5">
 						<div class="billing-details">
@@ -97,73 +98,83 @@
 							</div>
 
 							<div class="form-group">
-								<input class="input" type="text" name="name" placeholder="*제품명"
-									required>
+								<input class="input" type="text" name="name" 
+									placeholder="품명" value="${ product.name }" required>
 							</div>
 							<div class="form-group">
 								<input class="input" type="text" name="companyName"
-									placeholder="*제조사" required>
+									placeholder="제조사" value="${ product.companyName }" required>
 							</div>
 							<div class="form-group">
 								<input class="input" type="text" name="division"
-									placeholder="제품 분류">
+									placeholder="제품분류" value="${ product.division }">
 							</div>
 							<div class="form-group">
 								<input class="input" type="text" name="generation"
-									placeholder="세대">
+									placeholder="세대" value="${ product.generation }">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="core" placeholder="코어 형태">
+								<input class="input" type="text" name="core" 
+									placeholder="코어" value="${ product.core }">
 							</div>
 							<div class="form-group">
 								<input class="input" type="text" name="thread"
-									placeholder="쓰레드 형태">
+									placeholder="쓰레드" value="${ product.thread }">
 							</div>
 							<div class="form-group">
 								<input class="input" type="text" name="capacity"
-									placeholder="용량">
+									placeholder="용량" value="${ product.capacity }">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="clock" placeholder="기본 클럭">
+								<input class="input" type="text" name="clock" 
+									placeholder="클럭" value="${ product.clock }">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="chipSet" placeholder="칩셋">
+								<input class="input" type="text" name="chipSet" 
+									placeholder="칩셋" value="${ product.chipSet }">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="socket" placeholder="소켓">
+								<input class="input" type="text" name="socket" 
+									placeholder="소켓" value="${ product.socket }">
 							</div>
 							<div class="form-group">
 								<input class="input" type="text" name="interfaceType"
-									placeholder="인터페이스">
+									placeholder="인터페이스" value="${ product.interfaceType }">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="buffer"
-									placeholder="HDD 버퍼 용량">
+								<input class="input" type="tel" name="buffer"
+									placeholder="HDD 버퍼 용량" value="${ product.buffer }">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="type"
-									placeholder="SDD 메모리 타입">
+								<input class="input" type="tel" name="type"
+									placeholder="SDD 메모리 타입" value="${ product.type }">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="outPut"
-									placeholder="파워 출력">
+								<input class="input" type="tel" name="outPut"
+									placeholder="파워 출력" value="${ product.outPut }">
 							</div>
 							<div class="form-group">
-								<input class="input" type="int" name="price" placeholder="*가격"
-									required>
+								<input class="input" type="tel" name="price" 
+									placeholder="*가격" value="${ product.price }" required>
 							</div>
 							<div class="form-group">
-								<input class="input" type="int" name="count" placeholder="*수량" required>
+								<input class="input" type="tel" name="count" 
+									placeholder="수량" value="${ product.count }">
 							</div>
 							<div class="form-group">
+								<c:forEach var="file" items="${ product.files }">
+								${ file.savedFileName }
+								[<a href="${ path }/deleteImage?pcCode=${ product.pcCode }">삭제</a>]<br>
+								</c:forEach>
+								<br>	
 								<input type="file" name="productImage">
 							</div>
 							<div class="form-group">
 								<div class="input-checkbox">* 은 필수 작성내용입니다.</div>
 							</div>
-
 						</div>
-						<button type="submit" class="add-to-cart-btn">등록</button>
+						<input type="submit" class="add-to-cart-btn" value="수정">
+						<a href="${ path }/detail/${ product.pcCode }"><input type="button" class="add-to-cart-btn" value="취소"></a>
 					</div>
 				</form>
 				<!-- /Product details -->

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${ pageContext.request.contextPath }"/>
+
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
 
 		<!-- BREADCRUMB -->
@@ -13,9 +14,8 @@
 						<ul class="breadcrumb-tree">
 							<li><a href="#">Home</a></li>
 							<li><a href="#">All Categories</a></li>
-							<li><a href="#">Accessories</a></li>
-							<li><a href="#">Headphones</a></li>
-							<li class="active">Product name goes here</li>
+							<li><a href="${ path }/productCategoryList?category=${ product.category }">${ product.category }</a></li>
+							<li class="active">${ product.name }</li>
 						</ul>
 					</div>
 				</div>
@@ -34,10 +34,11 @@
 					<!-- Product main img -->
 					<div class="col-md-5 col-md-push-2">
 						<div id="product-main-img">
+							<c:forEach var="photo" items="${ product.files }">
 							<div class="product-preview">
-								<img src="/PCsell/resources/img/product01.png" alt="">
+								<img src="/PCsell/resources/img/${ photo.savedFileName }">
 							</div>
-
+							</c:forEach>
 							<div class="product-preview">
 								<img src="/PCsell/resources/img/product03.png" alt="">
 							</div>
@@ -78,7 +79,7 @@
 					<!-- Product details -->
 					<div class="col-md-5">
 						<div class="product-details">
-							<h2 class="product-name">product name goes here</h2>
+							<h2 class="product-name">${ product.name }</h2>
 							<div>
 								<div class="product-rating">
 									<i class="fa fa-star"></i>
@@ -90,26 +91,9 @@
 								<a class="review-link" href="#">10 Review(s) | Add your review</a>
 							</div>
 							<div>
-								<h3 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h3>
+								<h3 class="product-price">${ product.price }원 <del class="product-old-price">${ product.price }원</del></h3>
 								<span class="product-available">In Stock</span>
 							</div>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-
-							<div class="product-options">
-								<label>
-									Size
-									<select class="input-select">
-										<option value="0">X</option>
-									</select>
-								</label>
-								<label>
-									Color
-									<select class="input-select">
-										<option value="0">Red</option>
-									</select>
-								</label>
-							</div>
-
 							<div class="add-to-cart">
 								<div class="qty-label">
 									Qty
@@ -128,7 +112,7 @@
 							</ul>
 
 							<ul class="product-links">
-								<li>Category:</li>
+								<li>Category: ${ product.category }</li>
 								<li><a href="#">Headphones</a></li>
 								<li><a href="#">Accessories</a></li>
 							</ul>
@@ -140,9 +124,14 @@
 								<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
 								<li><a href="#"><i class="fa fa-envelope"></i></a></li>
 							</ul>
-
-						</div>
+						</div>		
 					</div>
+						<ul class="store-grid">
+							<li><a href="${ path }/productUpdate/${ product.pcCode }">내용수정</a></li>
+						</ul>
+						<ul class="store-grid">
+							<li><a href="${ path }/productDelete/${ product.pcCode }">상품삭제</a></li>
+						</ul>
 					<!-- /Product details -->
 
 					<!-- Product tab -->
@@ -162,7 +151,7 @@
 								<div id="tab1" class="tab-pane fade in active">
 									<div class="row">
 										<div class="col-md-12">
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+											<p>${ product.name }</p>
 										</div>
 									</div>
 								</div>
@@ -172,7 +161,108 @@
 								<div id="tab2" class="tab-pane fade in">
 									<div class="row">
 										<div class="col-md-12">
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+											<table border="1">
+												<tr>
+													<td><p>제품명</p></td>
+													<td>${ product.name }</td>
+												</tr>
+												<tr>
+													<td><p>카테고리</p></td>
+													<td>${ product.category }</td>
+												</tr>
+												<tr>
+													<td><p>제조사</p></td>
+													<td>${ product.companyName }</td>
+												</tr>
+												<c:choose>
+													<c:when test="${ product.generation != null }">
+														<tr>
+															<td><p>세대</p></td>
+															<td>${ product.generation }</td>
+														</tr>
+													</c:when>
+												</c:choose>
+												<c:choose>
+													<c:when test="${ product.core != null }">
+														<tr>
+															<td><p>코어</p></td>
+															<td>${ product.core }</td>
+														</tr>
+													</c:when>
+												</c:choose>
+												<c:choose>
+													<c:when test="${ product.thread != null }">
+														<tr>
+															<td><p>쓰레드</p></td>
+															<td>${ product.thread }</td>
+														</tr>
+													</c:when>
+												</c:choose>
+												<c:choose>
+													<c:when test="${ product.capacity != null }">
+														<tr>
+															<td><p>용량</p></td>
+															<td>${ product.capacity }</td>
+														</tr>
+													</c:when>
+												</c:choose>
+												<c:choose>
+													<c:when test="${ product.clock != null }">
+														<tr>
+															<td><p>클럭</p></td>
+															<td>${ product.clock }</td>
+														</tr>
+													</c:when>
+												</c:choose>
+												<c:choose>
+													<c:when test="${ product.chipSet != null }">
+														<tr>
+															<td><p>칩셋</p></td>
+															<td>${ product.chipSet }</td>
+														</tr>
+													</c:when>
+												</c:choose>
+												<c:choose>
+													<c:when test="${ product.socket != null }">
+														<tr>
+															<td><p>소켓</p></td>
+															<td>${ product.socket }</td>
+														</tr>
+													</c:when>
+												</c:choose>
+												<c:choose>
+													<c:when test="${ not empty product.interfaceType }">
+														<tr>
+															<td><p>인터페이스</p></td>
+															<td>${ product.interfaceType }</td>
+														</tr>
+													</c:when>
+												</c:choose>
+												<c:choose>
+													<c:when test="${ product.buffer != null }">
+														<tr>
+															<td><p>버퍼 용량</p></td>
+															<td>${ product.buffer }</td>
+														</tr>
+													</c:when>
+												</c:choose>
+												<c:choose>
+													<c:when test="${ product.type != null }">
+														<tr>
+															<td><p>타입</p></td>
+															<td>${ product.type }</td>
+														</tr>
+													</c:when>
+												</c:choose>
+												<c:choose>
+													<c:when test="${ product.outPut != null }">
+														<tr>
+															<td><p>출력</p></td>
+															<td>${ product.outPut }</td>
+														</tr>
+													</c:when>
+												</c:choose>
+											</table>
 										</div>
 									</div>
 								</div>
