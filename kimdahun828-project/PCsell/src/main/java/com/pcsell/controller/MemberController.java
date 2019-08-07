@@ -56,7 +56,7 @@ public class MemberController {
 		//3. 로그인 성공 또는 실패 처리
 		if (member != null) { //로그인 가능 -> 로그인 처리 : 세션에 로그인 데이터 저장
 			session.setAttribute("loginuser", member); //로그인 처리
-			return "redirect:/home"; 			
+			return "redirect:/"; 			
 		} else { //로그인 실패
 			return "member/login";			
 		}
@@ -85,7 +85,7 @@ public class MemberController {
 	public String logout(HttpSession session) {
 		
 		session.removeAttribute("loginuser");
-		return "redirect:/home";
+		return "redirect:/";
 		//return "redirect:/";
 		
 	}
