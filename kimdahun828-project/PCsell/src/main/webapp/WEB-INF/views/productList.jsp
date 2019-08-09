@@ -225,7 +225,7 @@
 								</label>
 							</div>
 							<c:choose>
-				            	<c:when test='${ id eq "manager" }'>
+				            	<c:when test='${ id eq "testadmin" }'>
 									<ul class="store-grid">
 										<li><a href="${ path }/productWrite">상품등록</a></li>
 									</ul>

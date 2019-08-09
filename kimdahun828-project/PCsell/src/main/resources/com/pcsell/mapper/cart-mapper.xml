@@ -29,9 +29,9 @@
 	</insert>
 	
 	
-	<insert id="ramCartAdd" parameterType="String"> <!-- 카트에 담는 용도 -->
+	<insert id="ramCartAdd" parameterType="hashmap"> <!-- 카트에 담는 용도 -->
 		INSERT INTO cart(pcCode, name, price, cartDate)
-			SELECT pcCode, name, price, sysdate
+		SELECT pcCode, name, price, sysdate
 			FROM product
 			WHERE pcCode = #{pcCode}
 	</insert>

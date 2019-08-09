@@ -31,8 +31,8 @@ public class CartServiceImpl implements CartService {
 		return checkList;
 	}
 	@Override
-	public void ramCartAdd(String pcCode) {
-		cartRepository.ramCartAdd(pcCode);
+	public void ramCartAdd(HashMap<String, Object> params) {
+		cartRepository.ramCartAdd(params);
 	}
 	
 	@Override

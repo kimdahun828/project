@@ -191,7 +191,7 @@
 								</label>
 							</div>							
 					 <c:choose>
-			            <c:when test='${ id eq "manager" }'><!-- 매니저 일 경우에만 상품 등록 가능함. -->
+			            <c:when test='${ id eq "testadmin" }'><!-- 매니저 일 경우에만 상품 등록 가능함. -->
 					       		<ul class="store-grid">
 									<li><a href="${ path }/productWrite">상품등록</a></li>
 								</ul>

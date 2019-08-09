@@ -13,7 +13,7 @@
 					<div class="col-md-12">
 						<h3 class="breadcrumb-header">Checkout</h3>
 						<ul class="breadcrumb-tree">
-							<li><a href="#">Home</a></li>
+							<li><a href="/PCsell">Home</a></li>
 							<li class="active">Checkout</li>
 						</ul>
 					</div>
@@ -250,7 +250,8 @@
 $(function() {
 	$('#pay').on('click', function(event) {
 		$.ajax({
-			url: 'cart/pay.action',				//비동기 요청 대상
+			type: "GET",
+			url: "pay.action",	//비동기 요청 대상
 			success: function(data, status, xhr) {
 				alert('결제 완료');
 			},

@@ -2,12 +2,11 @@ package com.pcsell.controller;
 
 import java.io.File;
 import java.util.ArrayList;
-
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,6 +22,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.pcsell.common.Pagination;
 import com.pcsell.service.ProductService;
 import com.pcsell.util.Util;
+import com.pcsell.vo.Member;
 import com.pcsell.vo.Photo;
 import com.pcsell.vo.Product;
 
@@ -158,7 +158,14 @@ public class ProductController {
 	
 	@RequestMapping(value = "/memorylist", method = RequestMethod.GET)
 	public String list(Model model, @RequestParam(required = false, defaultValue = "1") int page
-						, @RequestParam(required = false, defaultValue = "1") int range){
+						, @RequestParam(required = false, defaultValue = "1") int range, HttpSession session){
+		
+		Member loginuser = (Member) session.getAttribute("loginuser");
+		
+		if(loginuser!=null) {
+			model.addAttribute("id", loginuser.getId());
+		}
+		
 		try {
 			String category = "RAM";
 		

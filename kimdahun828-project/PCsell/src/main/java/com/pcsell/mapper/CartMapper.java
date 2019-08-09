@@ -13,7 +13,7 @@ public interface CartMapper {
 
 	void addcart(String name);
 
-	void ramCartAdd(String pcCode);
+	void ramCartAdd(HashMap<String, Object> params);
 
 	List<Cart> ramCartList(Date date);
 

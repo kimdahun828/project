@@ -6,6 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.pcsell.service.CartService;
 import com.pcsell.service.ProductService;
+import com.pcsell.vo.Member;
 import com.pcsell.vo.Photo;
 import com.pcsell.vo.Product;
 
@@ -27,7 +32,7 @@ public class ConnectController {
 	private ProductService productService;
 	
 	@RequestMapping(value = "/productList")
-	public String viewCart(Model model) {
+	public String viewCart(Model model, HttpSession session) {
 
 		int pageSize = 9;
 		int currentPage = 1;
@@ -44,6 +49,12 @@ public class ConnectController {
 		for (Product product : products) {
 			List<Photo> photo = productService.findProductImage(product.getPcCode());
 			product.setFiles(photo);
+		}
+		
+		Member loginuser = (Member) session.getAttribute("loginuser");
+		
+		if(loginuser!=null) {
+			model.addAttribute("id", loginuser.getId());
 		}
 		
 		model.addAttribute("products", products);
@@ -121,6 +132,5 @@ public class ConnectController {
 
 		return "accessories"; 
 	}
-	
 	
 }

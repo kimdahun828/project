@@ -42,8 +42,8 @@ public class CartRepositoryImpl implements CartRepository {
 	}
 	
 	@Override
-	public void ramCartAdd(String pcCode) {
-		cartMapper.ramCartAdd(pcCode);	
+	public void ramCartAdd(HashMap<String, Object> params) {
+		cartMapper.ramCartAdd(params);	
 	}
 	
 	@Override
